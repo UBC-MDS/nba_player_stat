@@ -5,7 +5,9 @@
 ## Motivation and Purpose
 
 
-The motivation behind this project is to help NBA fans better understand their favorite stars, and to understand the historical performance of the stars in different periods and different teams through visualization. Further, this helps NBA fans make better decisions when betting. On the other hand, we can also commemorate those former superstars such as Kobe Bryant in a visual way. We can understand the miracles created by this legendary superstar in the Lakers and the glory of the Zijin Dynasty. A tribute to the eternal Lakers number 24.
+The motivation behind this project is to help NBA fans better understand their favorite players and visualize how the players have performed historically over time and across teams. Further, this helps NBA fans to make better decisions when betting. On the other hand, we can also honor those former superstars, such as Kobe Bryant, by visualizing them. We can learn about the wonders the legendary superstar created with the Lakers and the glory of the purple and gold dynasty. A tribute to the eternal Lakers #24.
+
+Translated with www.DeepL.com/Translator (free version)
 
 
 ## Primary Research Question
