@@ -5,9 +5,11 @@
 ## Motivation and Purpose
 
 
-The motivation behind this project is to help NBA fans better understand their favorite players and visualize how the players have performed historically over time and across teams. Further, this helps NBA fans to make better decisions when betting. On the other hand, we can also honor those former superstars, such as Kobe Bryant, by visualizing them. We can learn about the wonders the legendary superstar created with the Lakers and the glory of the purple and gold dynasty. A tribute to the eternal Lakers #24.
+The motivation behind this project is to help NBA fans better understand their favorite players and visualize how the players have performed historically over time and across teams. Since the NBA has a long history and team changes are a regular occurrence, it was necessary to create a data visualization app that could cover all 30 teams in the NBA.
 
-Translated with www.DeepL.com/Translator (free version)
+Further, it helps NBA fans make better decisions when betting, as the clustering visualization of player data helps fans give basic judgments on player performance levels. Fans can determine a player's style of play by where he scores most often, how he scores most often, the number of assists, etc., and use this as a starting point to get to know a new player.
+
+On the other hand, we can also honor those former superstars, such as Kobe Bryant, by visualizing their performance. We can learn about the wonders the legendary superstar created with the Lakers and the glory of the purple and gold dynasty. Salute to the eternal Lakers #24.
 
 
 ## Primary Research Question
