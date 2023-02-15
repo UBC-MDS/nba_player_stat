@@ -18,14 +18,13 @@ Contributions are welcome, and they are greatly appreciated!
 
 ## About
 
-This document outlines how to propose a change to our \`nba_player_stat\` project, and the repo can be found [here]([https://github.com/UBC-MDS/nba_player_stat).](https://github.com/UBC-MDS/nba_player_stat).) We look forward to all proposals and contributions to this project. If reporting a bug or requesting features, please open an issue. If you'd like to actively contribute to features and/or bugs, please fork our repo and submit a PR, which will be reviewed as soon as possible. Please note that all contributors must abide by our code of conduct which can be found below.
+This document outlines how to propose a change to our \`nba_player_stat\` project, and the repo can be found [here](https://github.com/UBC-MDS/nba_player_stat). We look forward to all proposals and contributions to this project. If reporting a bug or requesting features, please open an issue. If you'd like to actively contribute to features and/or bugs, please fork our repo and submit a PR, which will be reviewed as soon as possible. Please note that all contributors must abide by our code of conduct which can be found below.
 
 ## Types of Contributions
 
 ### Report Bugs
 
 If you are reporting a bug, please include:
-
 
 \* Your operating system name and version.
 
@@ -49,7 +48,6 @@ Please feel free to contribute to any part of the documentation, such as the off
 
 If you are proposing a feature:
 
-
 \* Explain in detail how it would work.
 
 \* Keep the scope as narrow as possible, to make it easier to implement.
@@ -60,14 +58,12 @@ If you are proposing a feature:
 
 Before making a PR for your proposed changes, please file an issue and confirm that someone from the team agrees that it's a valid problem. Furthermore, some of the guidelines to follow in your issue are as follows:
 
-
 1\. The PR should include additional tests if appropriate.
 
 2\. If the PR adds functionality, the docs should be updated.
 
-3. The PR should work for all currently supported operating systems and versions of R.
+3.  The PR should work for all currently supported operating systems and versions of R.
 
 ## Code of Conduct
 
-Please note that the \`nba_player_stat\` project is released with a
-Code of Conduct. By contributing to this project you agree to abide by its terms.
+Please note that the \`nba_player_stat\` project is released with a Code of Conduct. By contributing to this project you agree to abide by its terms.
