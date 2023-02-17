@@ -8,7 +8,7 @@ The visualization app contains a landing page that shows NBA player performances
 
 The visualization is designed to display multiple statistics of NBA players. The app allows users to search an interested NBA player by name with search box item, for example, "Micheal Jordan", the app then shows the player's information corresponding to the input player. Furthermore. the users then are able to filter and scope performances of the player with three types of filters,
 
-- A slider of the year the player plays in NBA, 
+- A slider of the year the player plays in NBA. 
 
 - Tick boxes of the quarter of the player plays.
 
