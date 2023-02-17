@@ -2,13 +2,13 @@
 
 ## Core Team Members
 
+-   Peng Zhang
+
 -   Fujie Sun
 
 -   Chen Lin
 
--   Suraporn Puangpanbut
-
--   Peng Zhang
+-   Nate Puangpanbut
 
 ### Core Team Contribution
 
@@ -66,4 +66,4 @@ Before making a PR for your proposed changes, please file an issue and confirm t
 
 ## Code of Conduct
 
-Please note that the \`nba_player_stat\` project is released with a Code of Conduct. By contributing to this project you agree to abide by its terms.
+Please note that the `nba_player_stat` project is released with a Code of Conduct. By contributing to this project you agree to abide by its terms.
