@@ -1,12 +1,20 @@
-# Exploring your NBA MVP player
+# NBA Player Performance
 
-(old example)
-This python-based dashboard is designed to help new college graduates explore the cost of living in different major cities around the world. We have designed our dashboard to give the user flexibility to compare the breakdown of monthly expense from different cities using a series of drop-down menus. We are planning on providing 4 different menus for the users to explore. The first menu allows the user to pick up to 6 different global cities to compare living expenses across, with all expenses shown in USD regardless of the location. If the user is unsure what cities they are interested in but want to explore a given region of the world, drop down menu two will allow users to select a global region, which will display all cities within the selected area. The third drop down menu allows the user to select a subset of monthly expenses to explore from average rent prices and monthly food expenditures. Finally, the user will be able to enter their expected salary in order to compare how their monthly wages will compare to their monthly expenditures. 
+Team members: Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut
 
-(old example)
-We are aiming to create 4 different visualizations within the dashboard. The first plot will be a bar chart that shows the breakdown of monthly expenses per city selected by the user. The second chart will show the surplus or deficit of living in each selected city, considering all monthly expenses and the users expected salary. The third plot will show the prices of buying a property and the 4 plot will be a heat map which spatially depicts living expenses in cities of interest. 
+## Description of App
 
-<br>
+The visualization app contains a landing page that shows NBA player performance statistics. The visualization contains the data of over 500 NBA player among 30 teams. This app aims to help an enthusiast NBA fan to better understand and assess NBA players performance.
+
+The visualization is designed to display multiple statistics of NBA players. The app allows users to search an interested NBA player by name with search box item, for example, "Micheal Jordan", then the app shows the player information of the interested player. The users then are able to filter and scope performance of the player by using a slider of the year the player plays in NBA, the quarter of the game users interested, and the team the player plays for. 
+
+
+We aim to offer three charts of player performances; Scoring performance(Point per game, Shooting accuracy), Game play(Number of game), and Skill indicators(Point per game, Total Rebound per game, Assist per game, Steal per game, and Block per game). These will show the player performance according to the player search and its filter.
+
+Therefore, the user can understand each NBA player performance in detail and understand more about the player they are interested.
+
+
+## Sketch
 <img src="img/dashboard_design_version1.png">
 
 ## Contributors
