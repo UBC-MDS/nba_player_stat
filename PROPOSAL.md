@@ -56,6 +56,7 @@ The data features will be used for this application are as followings:
     - The `AST` column divided by the `G` column (the rows for each year the player player) for **Assist per game**
     - The `STL` column divided by the `G` column (the rows for each year the player player) for **Steal per game**
     - The `BLK` column divided by the `G` column (the rows for each year the player player) for **Block per game**
+
 ## Primary research question and usage scenarios
 
 The project aims to answer the following primary question:
