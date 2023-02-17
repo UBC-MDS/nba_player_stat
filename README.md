@@ -1,17 +1,22 @@
-# NBA Player Performance
+# NBA Player Performances
 
 Team members: Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut
 
 ## Description of App
 
-The visualization app contains a landing page that shows NBA player performance statistics. The visualization contains the data of over 500 NBA player among 30 teams. This app aims to help an enthusiast NBA fan to better understand and assess NBA players performance.
+The visualization app contains a landing page that shows NBA player performances. The visualization contains the data of over 500 NBA players among 30 NBA teams. This app aims to help enthusiast NBA fans to better understand and assess NBA player performances.
 
-The visualization is designed to display multiple statistics of NBA players. The app allows users to search an interested NBA player by name with search box item, for example, "Micheal Jordan", then the app shows the player information of the interested player. The users then are able to filter and scope performance of the player by using a slider of the year the player plays in NBA, the quarter of the game users interested, and the team the player plays for. 
+The visualization is designed to display multiple statistics of NBA players. The app allows users to search an interested NBA player by name with search box item, for example, "Micheal Jordan", the app then shows the player's information corresponding to the input player. Furthermore. the users then are able to filter and scope performances of the player with three types of filters,
 
+- A slider of the year the player plays in NBA, 
 
-We aim to offer three charts of player performances; Scoring performance(Point per game, Shooting accuracy), Game play(Number of game), and Skill indicators(Point per game, Total Rebound per game, Assist per game, Steal per game, and Block per game). These will show the player performance according to the player search and its filter.
+- Tick boxes of the quarter of the player plays.
 
-Therefore, the user can understand each NBA player performance in detail and understand more about the player they are interested.
+- A multiple check box of the team the player plays for. 
+
+We aim to offer three charts of player performances; Scoring performance(Point per game, Shooting accuracy), Game play(Number of game), and Skill indicators(Point per game, Total Rebound per game, Assist per game, Steal per game, and Block per game). These will show the player performances according to the player search and its filter.
+
+Therefore, users can study each NBA player's performances in detail and understand more about the player they are interested.
 
 
 ## Sketch
