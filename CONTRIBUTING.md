@@ -2,13 +2,13 @@
 
 ## Core Team Members
 
+-   Peng Zhang
+
 -   Fujie Sun
 
 -   Chen Lin
 
--   Suraporn Puangpanbut
-
--   Peng Zhang
+-   Nate Puangpanbut
 
 ### Core Team Contribution
 

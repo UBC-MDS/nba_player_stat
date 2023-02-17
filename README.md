@@ -22,3 +22,4 @@ The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate P
 
 # License
 `nba_player_stat` is licensed under the terms of the MIT license.
+Please refer to the License File [here](https://github.com/UBC-MDS/nba_player_stat/blob/main/LICENSE)
