@@ -39,13 +39,13 @@ Since the topic of this project is the visualization of NBA statistics, this pro
 
 We have an on-call working group to manage the project and version control. The working group consists of four members who built the project. If you have any questions, you can contact the team members via email.
 
-- FUJIE Sun
+-   Peng Zhang
 
-- Peng Zhang
- 
-- Chen Lin
-  
-- Nate Puangpanbut
+-   Fujie Sun
+
+-   Chen Lin
+
+-   Nate Puangpanbut
 
 Any inappropriate submissions will be scrutinized and authors will be banned from future submissions. We strictly encrypt contributors' data and respect their privacy and personal information.
 
