@@ -28,3 +28,17 @@ slug <- paste0(slug_ln, slug_fn, '01')#"bryanko01"
 url <- paste0("https://www.basketball-reference.com/players/",substr(slug,1,1),"/",slug,".html")
 image_url <- paste0("https://www.basketball-reference.com/req/202106291/images/players/",slug,".jpg")
 
+# Read total stats
+ttl_stat <- url %>%
+  read_html %>%
+  html_node("#totals") %>% 
+  html_table()
+
+# Read advanced stats
+adv_stat <- url %>%
+  read_html %>%
+  html_node("#advanced") %>% 
+  html_table()
+
+# Merge stats tables
+total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
