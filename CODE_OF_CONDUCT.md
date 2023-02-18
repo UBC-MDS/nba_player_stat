@@ -10,7 +10,7 @@ We agree with the following behaviors*:
 
 - Friendly and patient communication.
 
-- Being open to diverse point-of-views and embrace learning.
+- Being open to diverse point-of-views and embracing learning.
 
 - Conversations and feedback based on objective facts.
 
@@ -52,3 +52,6 @@ Any inappropriate submissions will be scrutinized and authors will be banned fro
 ## Attribution
 
 This Code of Conduct is adapted from the Pandas Governance Code of Conduct available [here](https://github.com/pandas-dev/pandas-governance/blob/master/code-of-conduct.md) and Contributor Covenant, version 1.3.0, available at [here](http://contributor-covenant.org/version/1/3/0/), and the Swift Code of Conduct.
+
+
+
