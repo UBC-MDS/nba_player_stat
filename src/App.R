@@ -1,27 +1,19 @@
+# NBA Stats App
+
+# Load necessary libraries for the app
 library(shiny)
+library(ggplot2)
+library(plyr)
+library(tidyverse)
+library(rvest)
+library(ggrepel)
+library(readr)
+library(RCurl)
+library(jpeg)
 
-ui <- fluidPage(
-  sliderInput(inputId='slider',
-              label='I am a label',
-              min=0,
-              max=10,
-              value=5 ),
-  plotOutput(outputId = 'distplot')
-)
+# Read the dataset from the specified location in the application file directory
+#dataset <-
+  #read.csv("../data/preload_data_player_name.csv")
 
-server <- function(input, output, session) {
-  
-  output$distplot <-  renderPlot({
-    
-    # generate bins 
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$slider + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white',
-         xlab = 'Waiting time to next eruption (in mins)',
-         main = 'Histogram of waiting times')
-  })
-}
+# Using real time api to load nba player stats data
 
-shinyApp(ui, server)
