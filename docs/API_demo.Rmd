@@ -49,19 +49,19 @@ print(image_url)
 ```
 
 ```{r pressure, echo=FALSE}
-# Read total stats
+# Read total stats.
 ttl_stat <- url %>%
   read_html %>%
   html_node("#totals") %>% 
   html_table()
 
-# Read advanced stats
+# Read advanced stats.
 adv_stat <- url %>%
   read_html %>%
   html_node("#advanced") %>% 
   html_table()
 
-# Merge stats tables
+# Merge stats tables.
 total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
 
 View(total_stats)
