@@ -169,7 +169,7 @@ ui <- fluidPage(
                 )
               ),
               mainPanel(
-                plotOutput(outputId = "plot_by_year")
+                plotlyOutput(outputId = "plot_by_year")
               )
             ),
             sidebarLayout(
@@ -208,16 +208,15 @@ server <- function(input, output, session) {
     
     year_input <- as.integer(input$careeryearslider)
     
-    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
+    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
     
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, `PTS per game`)) + 
         ggtitle(paste0(player, ' played between ', 
-                       career_range_start, ' and ', 
-                       career_range_end)) +
-        geom_point() +
-        geom_smooth())
+                       as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
+                       year_input)) +
+        geom_point())
   })
   
   output$plot_by_team <- renderPlotly({
@@ -232,8 +231,7 @@ server <- function(input, output, session) {
       ggplot(data_by_team, 
              aes(Season, `PTS per game`)) + 
         ggtitle(paste0(player, ' played for ', input$team_select)) +
-        geom_point() +
-        geom_smooth())
+        geom_point())
   })
   
 }
