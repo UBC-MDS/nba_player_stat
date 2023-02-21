@@ -79,6 +79,9 @@ player_stats <- player_stats |>
          'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
 
 player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+
+player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+
 player_exp <- length(unique(player_exp_no_na$Age))
 
 player_first_season <- min(unique(player_exp_no_na$Season))
@@ -186,4 +189,15 @@ team <- 'DAL'
 player_exp_no_na[player_exp_no_na$Tm == 'DAL',]
 
 typeof(player_exp_no_na$Tm)
+```
+
+```{r}
+career_range_start <- 1994
+career_range_end <- 2000
+
+data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
+data_by_year
+```
+
+```{}
 ```

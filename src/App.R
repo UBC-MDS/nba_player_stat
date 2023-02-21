@@ -105,6 +105,8 @@ player_stats <- player_stats |>
 # remove missing values
 player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
 
+player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+
 # Get PLayer Experience
 player_exp <- length(unique(player_exp_no_na$Age))
 
@@ -167,12 +169,12 @@ ui <- fluidPage(
                 )
               ),
               mainPanel(
-                plotOutput(outputId = "distplot")
+                plotOutput(outputId = "plot_by_year")
               )
             ),
             sidebarLayout(
               sidebarPanel(
-                selectInput(inputId='var',
+                selectInput(inputId='team_select',
                             label="Select the team",
                             choices = player_teams,
                             selected = 'wt')
@@ -202,30 +204,34 @@ server <- function(input, output, session) {
   
   thematic::thematic_shiny()
   
-  output$distplot <- renderPlot({
-    # generate bins
-    x <- player_exp_no_na$`PTS per game`
-    bins <- seq(min(x), max(x), length.out = input$careeryearslider)
+  output$plot_by_year <- renderPlotly({
     
-    # draw the histogram with the specified number of bins
-    hist(x,
-         breaks = bins, 
-         col = "darkgray", 
-         border = "white",
-         xlab = "Career year/season",
-         main = "Histogram of Points per game by season"
-    )
+    year_input <- as.integer(input$careeryearslider)
+    
+    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
+    
+    ggplotly( 
+      ggplot(data_by_year, 
+             aes(Season, `PTS per game`)) + 
+        ggtitle(paste0(player, ' played between ', 
+                       career_range_start, ' and ', 
+                       career_range_end)) +
+        geom_point() +
+        geom_smooth())
   })
   
   output$plot_by_team <- renderPlotly({
     
-    team_selected <- substr(input$var, start = nchar(input$var) - 3, stop = nchar(input$var) - 1)
+    team_selected <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3, 
+                            stop = nchar(input$team_select) - 1)
     
     data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
     
     ggplotly( 
       ggplot(data_by_team, 
-             aes(Season, `PTS per game`)) + # Read book chapter 12 to understand why you have to use .data
+             aes(Season, `PTS per game`)) + 
+        ggtitle(paste0(player, ' played for ', input$team_select)) +
         geom_point() +
         geom_smooth())
   })
