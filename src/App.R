@@ -146,7 +146,7 @@ ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "journal"),
   titlePanel(title=div(img(src="nba_logo.png", height='50px'), "NBA Player Stats Application Dashboard")),
   fluidRow(column(
-            width = 7,
+            width = 11,
             h4("Search by player name :"),
             sidebarPanel(
               width = 8,
@@ -169,8 +169,10 @@ ui <- fluidPage(
                 )
               ),
               mainPanel(
-                plotlyOutput(outputId = "plot_by_year_pts"),
-                plotlyOutput(outputId = "plot_by_year_g")
+                fluidRow(
+                  column(width = 6, plotlyOutput(outputId = "plot_by_year_pts")),
+                  column(width = 6, plotlyOutput(outputId = "plot_by_year_g"))
+                )
               )
             ),
             sidebarLayout(
@@ -181,7 +183,10 @@ ui <- fluidPage(
                             selected = 'wt')
               ),
               mainPanel(
-                plotlyOutput(outputId = 'plot_by_team')
+                fluidRow(
+                  column(width = 6, plotlyOutput(outputId = 'plot_by_team_pts')),
+                  column(width = 6, plotlyOutput(outputId = "plot_by_team_g"))
+                )
               )
             ),
             fluidRow(column(width = 2, "Team(s)")),
@@ -236,7 +241,7 @@ server <- function(input, output, session) {
         geom_point())
   })
   
-  output$plot_by_team <- renderPlotly({
+  output$plot_by_team_pts <- renderPlotly({
     
     team_selected <- substr(input$team_select, 
                             start = nchar(input$team_select) - 3, 
@@ -247,6 +252,21 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_team, 
              aes(Season, `PTS per game`)) + 
+        ggtitle(paste0(player, ' played for ', input$team_select)) +
+        geom_point())
+  })
+  
+  output$plot_by_team_g <- renderPlotly({
+    
+    team_selected <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3, 
+                            stop = nchar(input$team_select) - 1)
+    
+    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
+    
+    ggplotly( 
+      ggplot(data_by_team, 
+             aes(Season, G)) + 
         ggtitle(paste0(player, ' played for ', input$team_select)) +
         geom_point())
   })
