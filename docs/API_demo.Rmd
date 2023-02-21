@@ -87,3 +87,27 @@ print(player_age)
 typeof(player_exp)
 
 ```
+
+```{r}
+position_map <- function(pos) {
+  pos <- toupper(pos)  # convert input to all uppercase
+  switch(pos,
+         "PG" = "Point Guard",
+         "SG" = "Shooting Guard",
+         "SF" = "Small Forward",
+         "PF" = "Power Forward",
+         "C" = "Center")
+}
+
+```
+
+```{r}
+player_position_ls <- unique(player_exp_no_na$Pos)
+
+player_positions <- c()
+
+for (pos in player_position_ls) {
+  player_positions <- c(player_positions, position_map(pos))
+}
+
+```

@@ -17,6 +17,17 @@ library(jpeg)
 
 # Using real time api to load nba player stats data
 
+# ---- Functions ----
+position_map <- function(pos) {
+  pos <- toupper(pos)  # convert input to all uppercase
+  switch(pos,
+         "PG" = "Point Guard",
+         "SG" = "Shooting Guard",
+         "SF" = "Small Forward",
+         "PF" = "Power Forward",
+         "C" = "Center")
+}
+
 # Add player name and player slug
 player <- "Jason Kidd"
 player_name_split <- tolower(strsplit(player, " ")[[1]])
@@ -56,6 +67,14 @@ player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
 player_exp <- length(unique(player_exp_no_na$Age))
 
 player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+
+player_position_ls <- unique(player_exp_no_na$Pos)
+
+player_positions <- c()
+
+for (pos in player_position_ls) {
+  player_positions <- c(player_positions, position_map(pos))
+}
 
 
 ui <- fluidPage(
