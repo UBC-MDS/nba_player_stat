@@ -179,3 +179,11 @@ for (team in player_team_ls) {
 
 print(player_teams)
 ```
+
+```{r}
+team <- 'DAL'
+    
+player_exp_no_na[player_exp_no_na$Tm == 'DAL',]
+
+typeof(player_exp_no_na$Tm)
+```

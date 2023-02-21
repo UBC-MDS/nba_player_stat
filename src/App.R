@@ -3,6 +3,7 @@
 # Load necessary libraries for the app
 library(shiny)
 library(ggplot2)
+library(plotly)
 library(plyr)
 library(tidyverse)
 library(rvest)
@@ -218,11 +219,13 @@ server <- function(input, output, session) {
   
   output$plot_by_team <- renderPlotly({
     
+    team_selected <- substr(input$var, start = nchar(input$var) - 3, stop = nchar(input$var) - 1)
     
+    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
     
     ggplotly( 
-      ggplot(mtcars, 
-             aes(.data[[input$var]], mpg)) + # Read book chapter 12 to understand why you have to use .data
+      ggplot(data_by_team, 
+             aes(Season, `PTS per game`)) + # Read book chapter 12 to understand why you have to use .data
         geom_point() +
         geom_smooth())
   })
