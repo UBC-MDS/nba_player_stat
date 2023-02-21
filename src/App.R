@@ -11,6 +11,7 @@ library(ggrepel)
 library(readr)
 library(RCurl)
 library(jpeg)
+library(fmsb) # For Radar chart
 
 # Read the dataset from the specified location in the application file directory
 #dataset <-
@@ -160,6 +161,7 @@ ui <- fluidPage(
             h4("Filters :"),
             sidebarLayout(
               sidebarPanel(
+                width = 4,
                 sliderInput(
                   inputId = "careeryearslider",
                   label = "Career Year",
@@ -170,8 +172,9 @@ ui <- fluidPage(
               ),
               mainPanel(
                 fluidRow(
-                  column(width = 6, plotlyOutput(outputId = "plot_by_year_pts")),
-                  column(width = 6, plotlyOutput(outputId = "plot_by_year_g"))
+                  column(width = 4, plotlyOutput(outputId = "plot_by_year_pts")),
+                  column(width = 4, plotlyOutput(outputId = "plot_by_year_g")),
+                  column(width = 4, plotOutput(outputId = "plot_by_year_radar"))
                 )
               )
             ),
@@ -239,6 +242,26 @@ server <- function(input, output, session) {
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
         geom_point())
+  })
+  
+  output$plot_by_year_radar <- renderPlot({
+    year_input <- as.integer(input$careeryearslider)
+    
+    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
+    
+    # Create a matrix of player data
+    player_matrix <- player_data()
+    print(player_matrix)
+    
+    # Create a vector of stat labels
+    stat_labels <- rownames(player_matrix)
+    
+    # Create a vector of maximum values for each stat
+    max_values <- rep(40, length(stat_labels))
+    
+    # Create the radar chart
+    radarchart(player_matrix, maxmin = max_values, pcol = "#FFCC00",cglcol = "grey",
+               title = input$player, paxisnames = stat_labels, pcolfill = "lightblue")
   })
   
   output$plot_by_team_pts <- renderPlotly({

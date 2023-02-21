@@ -198,6 +198,3 @@ career_range_end <- 2000
 data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
 data_by_year
 ```
-
-```{}
-```
