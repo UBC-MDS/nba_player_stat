@@ -28,6 +28,43 @@ position_map <- function(pos) {
          "C" = "Center")
 }
 
+nba_teams_map <- function(team_code) {
+  teams <- list(ATL = "Atlanta Hawks",
+                BKN = "Brooklyn Nets",
+                BOS = "Boston Celtics",
+                CHA = "Charlotte Hornets",
+                CHI = "Chicago Bulls",
+                CLE = "Cleveland Cavaliers",
+                DAL = "Dallas Mavericks",
+                DEN = "Denver Nuggets",
+                DET = "Detroit Pistons",
+                GSW = "Golden State Warriors",
+                HOU = "Houston Rockets",
+                IND = "Indiana Pacers",
+                LAC = "Los Angeles Clippers",
+                LAL = "Los Angeles Lakers",
+                MEM = "Memphis Grizzlies",
+                MIA = "Miami Heat",
+                MIL = "Milwaukee Bucks",
+                MIN = "Minnesota Timberwolves",
+                NOP = "New Orleans Pelicans",
+                NJN = "Brooklyn Nets",
+                NYK = "New York Knicks",
+                OKC = "Oklahoma City Thunder",
+                ORL = "Orlando Magic",
+                PHI = "Philadelphia 76ers",
+                PHO = "Phoenix Suns",
+                PHX = "Phoenix Suns",
+                POR = "Portland Trail Blazers",
+                SAC = "Sacramento Kings",
+                SAS = "San Antonio Spurs",
+                TOR = "Toronto Raptors",
+                TOT = "Two Other Teams",
+                UTA = "Utah Jazz",
+                WAS = "Washington Wizards")
+  return(teams[[team_code]])
+}
+
 # Add player name and player slug
 player <- "Jason Kidd"
 player_name_split <- tolower(strsplit(player, " ")[[1]])
@@ -54,7 +91,7 @@ adv_stat <- url %>%
 # Merge stats tables
 total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
 
-# Get PLayer Position, Age and Experience
+# Prepare player stats table
 player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS')) |>
   mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
          'AST per game' = round(player_stats$AST / player_stats$G, 2),
@@ -62,12 +99,16 @@ player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%'
          'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
          'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
 
+# remove missing values
 player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
 
+# Get PLayer Experience
 player_exp <- length(unique(player_exp_no_na$Age))
 
+# Get PLayer Age
 player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
 
+# Get PLayer Positions
 player_position_ls <- unique(player_exp_no_na$Pos)
 
 player_positions <- ''
@@ -81,7 +122,17 @@ for (i in seq_along(player_position_ls)) {
   }
 }
 
+# Get PLayer teams
+player_team_ls <- unique(player_exp_no_na$Tm)
 
+player_teams <- c()
+
+for (team in player_team_ls) {
+  player_teams <- c(player_teams, nba_teams_map(team))
+}
+
+
+# ---- UI----
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "journal"),
   titlePanel(title=div(img(src="nba_logo.png", height='50px'), "NBA Player Stats Application Dashboard")),
@@ -125,6 +176,7 @@ ui <- fluidPage(
            ))
 )
 
+# ---- Backend ----
 server <- function(input, output, session) {
   
   thematic::thematic_shiny()

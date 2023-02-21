@@ -118,3 +118,56 @@ for (i in seq_along(player_position_ls)) {
 print(player_positions)
 
 ```
+
+```{r}
+# Define a function to map NBA team codes to team names
+nba_teams_map <- function(team_code) {
+  teams <- list(ATL = "Atlanta Hawks",
+                BKN = "Brooklyn Nets",
+                BOS = "Boston Celtics",
+                CHA = "Charlotte Hornets",
+                CHI = "Chicago Bulls",
+                CLE = "Cleveland Cavaliers",
+                DAL = "Dallas Mavericks",
+                DEN = "Denver Nuggets",
+                DET = "Detroit Pistons",
+                GSW = "Golden State Warriors",
+                HOU = "Houston Rockets",
+                IND = "Indiana Pacers",
+                LAC = "Los Angeles Clippers",
+                LAL = "Los Angeles Lakers",
+                MEM = "Memphis Grizzlies",
+                MIA = "Miami Heat",
+                MIL = "Milwaukee Bucks",
+                MIN = "Minnesota Timberwolves",
+                NOP = "New Orleans Pelicans",
+                NJN = "Brooklyn Nets",
+                NYK = "New York Knicks",
+                OKC = "Oklahoma City Thunder",
+                ORL = "Orlando Magic",
+                PHI = "Philadelphia 76ers",
+                PHO = "Phoenix Suns",
+                PHX = "Phoenix Suns",
+                POR = "Portland Trail Blazers",
+                SAC = "Sacramento Kings",
+                SAS = "San Antonio Spurs",
+                TOR = "Toronto Raptors",
+                TOT = "Two Other Teams",
+                UTA = "Utah Jazz",
+                WAS = "Washington Wizards")
+  return(teams[[team_code]])
+}
+
+```
+
+```{r}
+player_team_ls <- unique(player_exp_no_na$Tm)
+
+player_teams <- c()
+
+for (team in player_team_ls) {
+  player_teams <- c(player_teams, nba_teams_map(team))
+}
+
+print(player_teams)
+```
