@@ -188,7 +188,7 @@ server <- function(input, output, session) {
   thematic::thematic_shiny()
   output$distplot <- renderPlot({
     # generate bins
-    x <- total_stats$PTS
+    x <- player_exp_no_na$`PTS per game`
     bins <- seq(min(x), max(x), length.out = input$careeryearslider + 1)
     
     # draw the histogram with the specified number of bins
