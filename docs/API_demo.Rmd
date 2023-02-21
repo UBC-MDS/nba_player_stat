@@ -104,10 +104,17 @@ position_map <- function(pos) {
 ```{r}
 player_position_ls <- unique(player_exp_no_na$Pos)
 
-player_positions <- c()
+player_positions <- ''
 
-for (pos in player_position_ls) {
-  player_positions <- c(player_positions, position_map(pos))
+for (i in seq_along(player_position_ls)) {
+  player_positions <- paste0(player_positions, 
+                             position_map(player_position_ls[i]), 
+                             collapse = "")
+  if (i != length(player_position_ls)) {
+    player_positions <- paste0(player_positions, ' & ', collapse = "")
+  }
 }
+
+print(player_positions)
 
 ```

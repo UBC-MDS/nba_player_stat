@@ -70,10 +70,15 @@ player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
 
 player_position_ls <- unique(player_exp_no_na$Pos)
 
-player_positions <- c()
+player_positions <- ''
 
-for (pos in player_position_ls) {
-  player_positions <- c(player_positions, position_map(pos))
+for (i in seq_along(player_position_ls)) {
+  player_positions <- paste0(player_positions, 
+                             position_map(player_position_ls[i]), 
+                             collapse = "")
+  if (i != length(player_position_ls)) {
+    player_positions <- paste0(player_positions, ' & ', collapse = "")
+  }
 }
 
 
@@ -88,9 +93,9 @@ ui <- fluidPage(
                   fluidRow(column(width = 3, align = "center", img(src=image_url, width=100)),
                            column(width = 8, align = "center",
                                   fluidRow(player),
-                                  fluidRow('Position:', player),
-                                  fluidRow('Age:', player),
-                                  fluidRow('Experience:', player))),
+                                  fluidRow('Position:', player_positions),
+                                  fluidRow('Age:', player_age),
+                                  fluidRow('Experience:', player_exp))),
                   h4("Filters :"),
                   sidebarLayout(
                     sidebarPanel(
