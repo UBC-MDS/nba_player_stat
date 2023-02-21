@@ -43,6 +43,21 @@ adv_stat <- url %>%
 # Merge stats tables
 total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
 
+# Get PLayer Position, Age and Experience
+player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS')) |>
+  mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
+         'AST per game' = round(player_stats$AST / player_stats$G, 2),
+         'STL per game' = round(player_stats$STL / player_stats$G, 2),
+         'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
+         'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+
+player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+
+player_exp <- length(unique(player_exp_no_na$Age))
+
+player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+
+
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "journal"),
   titlePanel(title=div(img(src="nba_logo.png", height='50px'), "NBA Player Stats Application Dashboard")),
