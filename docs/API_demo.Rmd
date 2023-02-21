@@ -69,7 +69,9 @@ total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos",
 ```
 
 ```{r}
-player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS')) |>
+player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
+
+player_stats <- player_stats |>
   mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
          'AST per game' = round(player_stats$AST / player_stats$G, 2),
          'STL per game' = round(player_stats$STL / player_stats$G, 2),
@@ -79,7 +81,13 @@ player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%'
 player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
 player_exp <- length(unique(player_exp_no_na$Age))
 
+player_first_season <- min(unique(player_exp_no_na$Season))
+player_last_season <- max(unique(player_exp_no_na$Season))
+
 player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+
+typeof(player_first_season)
+print(player_last_season)
                                      
 print(player_exp)
 print(player_age)
