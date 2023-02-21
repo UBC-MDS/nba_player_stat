@@ -169,7 +169,8 @@ ui <- fluidPage(
                 )
               ),
               mainPanel(
-                plotlyOutput(outputId = "plot_by_year")
+                plotlyOutput(outputId = "plot_by_year_pts"),
+                plotlyOutput(outputId = "plot_by_year_g")
               )
             ),
             sidebarLayout(
@@ -188,15 +189,16 @@ ui <- fluidPage(
             fluidRow(column(width = 6, checkboxInput('change_sign','Team B'))),
             fluidRow(column(width = 6, checkboxInput('change_sign','Team C'))),
             fluidRow(column(width = 6, checkboxInput('change_sign','Team D')))),
-           column(
-             width = 5,
-             h4("Points per game and shooting accuracy :"),
-             fluidRow(column(width = 8, align = "center", img(src="PTS.png", height='200px'))),
-             h4("Game played in each season :"),
-             fluidRow(column(width = 8, align = "center", img(src="GamePlayed.png", height='200px'))),
-             h4("Player Radar Chart :"),
-             fluidRow(column(width = 8, align = "center", img(src="PlayerRadar.png", height='250px'))),
-           ))
+           # column(
+           #   width = 5,
+           #   h4("Points per game and shooting accuracy :"),
+           #   fluidRow(column(width = 8, align = "center", img(src="PTS.png", height='200px'))),
+           #   h4("Game played in each season :"),
+           #   fluidRow(column(width = 8, align = "center", img(src="GamePlayed.png", height='200px'))),
+           #   h4("Player Radar Chart :"),
+           #   fluidRow(column(width = 8, align = "center", img(src="PlayerRadar.png", height='250px'))),
+           # )
+        )
 )
 
 # ---- Backend ----
@@ -204,7 +206,7 @@ server <- function(input, output, session) {
   
   thematic::thematic_shiny()
   
-  output$plot_by_year <- renderPlotly({
+  output$plot_by_year_pts <- renderPlotly({
     
     year_input <- as.integer(input$careeryearslider)
     
@@ -213,7 +215,22 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' played between ', 
+        ggtitle(paste0(player, ' Points per game between ', 
+                       as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
+                       year_input)) +
+        geom_point())
+  })
+  
+  output$plot_by_year_g <- renderPlotly({
+    
+    year_input <- as.integer(input$careeryearslider)
+    
+    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
+    
+    ggplotly( 
+      ggplot(data_by_year, 
+             aes(Season, G)) + 
+        ggtitle(paste0(player, ' games played between ', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
         geom_point())
