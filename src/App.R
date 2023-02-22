@@ -19,6 +19,9 @@ library(ggradar)
 # For checking URL
 library(httr)
 
+# For capitalize the name
+library(stringr)
+
 # Read the dataset from the specified location in the application file directory
 #dataset <-
   #read.csv("../data/preload_data_player_name.csv")
@@ -274,7 +277,7 @@ server <- function(input, output, session) {
   
   # Define reactive to get input value
   observeEvent(input$player_search, {
-    player <<- input$player_search
+    player <<- str_to_title(input$player_search)
     # print(player)
     
     url_status <- get_player_web(player)$response
