@@ -11,7 +11,11 @@ library(ggrepel)
 library(readr)
 library(RCurl)
 library(jpeg)
-library(fmsb) # For Radar chart
+
+# For Radar chart
+# library(fmsb) 
+library(ggradar)
+
 
 # Read the dataset from the specified location in the application file directory
 #dataset <-
@@ -167,7 +171,8 @@ ui <- fluidPage(
                   label = "Career Year",
                   min = as.integer(substr(player_first_season, start = 1, stop = 4)),
                   max = as.integer(substr(player_last_season, start = 1, stop = 4)),
-                  value = as.integer(substr(player_first_season, start = 1, stop = 4))
+                  value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
+                                       as.integer(substr(player_last_season, start = 1, stop = 4)))/2)
                 )
               ),
               mainPanel(
@@ -249,19 +254,44 @@ server <- function(input, output, session) {
     
     data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
     
+    avg_pts <- mean(data_by_year$`PTS per game`)
+    avg_trb <- mean(data_by_year$`TRB per game`)
+    avg_ast <- mean(data_by_year$`AST per game`)
+    avg_stl <- mean(data_by_year$`STL per game`)
+    avg_blk <- mean(data_by_year$`BLK per game`)
+    
     # Create a matrix of player data
-    player_matrix <- player_data()
+    player_matrix <- data.frame(
+      Points = avg_pts,
+      Rebounds = avg_trb,
+      Assists = avg_ast,
+      Steals = avg_stl,
+      Blocks = avg_blk
+    )
+    
     print(player_matrix)
+  
+    # # Create a vector of stat labels
+    # stat_labels <- rownames(player_matrix)
+    # 
+    # # Create a vector of maximum values for each stat
+    # max_values <- rep(20, length(stat_labels))
+    # 
+    # # Create the radar chart
+    # radarchart(player_matrix)
     
-    # Create a vector of stat labels
-    stat_labels <- rownames(player_matrix)
-    
-    # Create a vector of maximum values for each stat
-    max_values <- rep(40, length(stat_labels))
-    
-    # Create the radar chart
-    radarchart(player_matrix, maxmin = max_values, pcol = "#FFCC00",cglcol = "grey",
-               title = input$player, paxisnames = stat_labels, pcolfill = "lightblue")
+    ggradar(
+      player_matrix, 
+      values.radar = c("0", "10", "20"),
+      grid.min = 0, grid.mid = 10, grid.max = 20,
+      # Polygons
+      group.line.width = 1, 
+      group.point.size = 3,
+      group.colours = "#00AFBB",
+      # Background and grid lines
+      background.circle.colour = "white",
+      gridline.mid.colour = "grey"
+    )
   })
   
   output$plot_by_team_pts <- renderPlotly({
