@@ -232,7 +232,7 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' Points per game between ', 
+        ggtitle(paste0(player, ' Points per game between \n', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
         geom_point()+
@@ -248,7 +248,7 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, G)) + 
-        ggtitle(paste0(player, ' games played between ', 
+        ggtitle(paste0(player, ' games played between \n', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
         geom_point()+
@@ -311,7 +311,7 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_team, 
              aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' played for ', input$team_select)) +
+        ggtitle(paste0(player, ' played for \n', input$team_select)) +
         geom_point()+
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
@@ -327,7 +327,7 @@ server <- function(input, output, session) {
     ggplotly( 
       ggplot(data_by_team, 
              aes(Season, G)) + 
-        ggtitle(paste0(player, ' played for ', input$team_select)) +
+        ggtitle(paste0(player, ' played for \n', input$team_select)) +
         geom_point()+
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
