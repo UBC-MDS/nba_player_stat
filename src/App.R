@@ -16,6 +16,8 @@ library(jpeg)
 # library(fmsb) 
 library(ggradar)
 
+# For checking URL
+library(httr)
 
 # Read the dataset from the specified location in the application file directory
 #dataset <-
@@ -71,80 +73,134 @@ nba_teams_map <- function(team_code) {
   return(teams[[team_code]])
 }
 
-# Add player name and player slug
-player <- "Kobe Bryant"
-player_name_split <- tolower(strsplit(player, " ")[[1]])
-slug_ln <- substr(player_name_split[2], start = 1, stop = 5)
-slug_fn <- substr(player_name_split[1], start = 1, stop = 2)
-slug <- paste0(slug_ln, slug_fn, '01')#"bryanko01" 
+get_player_web <- function(player) {
+  player_name_split <- tolower(strsplit(player, " ")[[1]])
+  slug_ln <- substr(player_name_split[2], start = 1, stop = 5)
+  slug_fn <- substr(player_name_split[1], start = 1, stop = 2)
+  slug <- paste0(slug_ln, slug_fn, '01')#"bryanko01" 
+  
+  # define player page URL and player image URL
+  url <- paste0("https://www.basketball-reference.com/players/",substr(slug,1,1),"/",slug,".html")
+  image_url <- paste0("https://www.basketball-reference.com/req/202106291/images/players/",slug,".jpg")
+  
+  response <- GET(url)
+  
+  # if (status_code(response) == 200) {
+  #   print(paste0("The URL ", url, " is accessible."))
+  # }
+  
+  return(list(url = url,
+              image_url = image_url,
+              response = status_code(response)))
+}
 
-# define player page URL and player image URL
-url <- paste0("https://www.basketball-reference.com/players/",substr(slug,1,1),"/",slug,".html")
-image_url <- paste0("https://www.basketball-reference.com/req/202106291/images/players/",slug,".jpg")
 
-# Read total stats
-ttl_stat <- url %>%
-  read_html %>%
-  html_node("#totals") %>% 
-  html_table()
-
-# Read advanced stats
-adv_stat <- url %>%
-  read_html %>%
-  html_node("#advanced") %>% 
-  html_table()
-
-# Merge stats tables
-total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
-
-# Prepare player stats table
-player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
-
-player_stats <- player_stats |>
-  mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
-         'AST per game' = round(player_stats$AST / player_stats$G, 2),
-         'STL per game' = round(player_stats$STL / player_stats$G, 2),
-         'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
-         'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
-
-# remove missing values
-player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
-
-player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
-
-# Get PLayer Experience
-player_exp <- length(unique(player_exp_no_na$Age))
-
-# Get Player career year range
-player_first_season <- min(unique(player_exp_no_na$Season))
-player_last_season <- max(unique(player_exp_no_na$Season))
-
-# Get PLayer Age
-player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
-
-# Get PLayer Positions
-player_position_ls <- unique(player_exp_no_na$Pos)
-
-player_positions <- ''
-
-for (i in seq_along(player_position_ls)) {
-  player_positions <- paste0(player_positions, 
-                             position_map(player_position_ls[i]), 
-                             collapse = "")
-  if (i != length(player_position_ls)) {
-    player_positions <- paste0(player_positions, ' & ', collapse = "")
+update_player <- function(player) {
+  
+  player_web <- get_player_web(player)
+  
+  url <- player_web$url
+  image_url <- player_web$image_url
+  
+  # Read total stats
+  ttl_stat <- url %>%
+    read_html %>%
+    html_node("#totals") %>% 
+    html_table()
+  
+  # Read advanced stats
+  adv_stat <- url %>%
+    read_html %>%
+    html_node("#advanced") %>% 
+    html_table()
+  
+  # Merge stats tables
+  total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
+  
+  # Prepare player stats table
+  player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
+  
+  player_stats <- player_stats |>
+    mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
+           'AST per game' = round(player_stats$AST / player_stats$G, 2),
+           'STL per game' = round(player_stats$STL / player_stats$G, 2),
+           'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
+           'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+  
+  # remove missing values
+  player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+  
+  player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+  
+  # Get PLayer Experience
+  player_exp <- length(unique(player_exp_no_na$Age))
+  
+  # Get Player career year range
+  player_first_season <- min(unique(player_exp_no_na$Season))
+  player_last_season <- max(unique(player_exp_no_na$Season))
+  
+  # Get PLayer Age
+  player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+  
+  # Get PLayer Positions
+  player_position_ls <- unique(player_exp_no_na$Pos)
+  
+  # print(player_position_ls)
+  
+  player_positions <- ''
+  
+  for (i in seq_along(player_position_ls)) {
+    player_positions <- paste0(player_positions, 
+                               position_map(player_position_ls[i]), 
+                               collapse = "")
+    if (i != length(player_position_ls)) {
+      player_positions <- paste0(player_positions, ' & ', collapse = "")
+    }
   }
+  
+  # Get PLayer teams
+  player_team_ls <- unique(player_exp_no_na$Tm)
+  
+  player_teams <- c()
+  
+  for (team in player_team_ls) {
+    player_teams <- c(player_teams, nba_teams_map(team))
+  }
+  
+  return(list(image_url = image_url, 
+              player_exp_no_na = player_exp_no_na,
+              player_exp = player_exp,
+              player_first_season = player_first_season,
+              player_last_season = player_last_season,
+              player_age = player_age,
+              player_positions = player_positions,
+              player_teams = player_teams))
 }
 
-# Get PLayer teams
-player_team_ls <- unique(player_exp_no_na$Tm)
+player <- 'Kobe Bryant'
 
-player_teams <- c()
+player_info <- update_player(player)
 
-for (team in player_team_ls) {
-  player_teams <- c(player_teams, nba_teams_map(team))
-}
-
+# global_var <- reactiveValues(
+#   image_url = player_info$image_url,
+#   player_positions = player_info$player_positions,
+#   player_age = player_info$player_age,
+#   player_exp = player_info$player_exp,
+#   player_first_season = player_info$player_first_season,
+#   player_last_season = player_info$player_last_season,
+#   player_exp_no_na = player_info$player_exp_no_na,
+#   player_teams = player_info$player_teams
+# )
+  
+  
+image_url <- player_info$image_url
+player_positions <- player_info$player_positions
+player_age <- player_info$player_age
+player_exp <- player_info$player_exp
+player_first_season <- player_info$player_first_season
+player_last_season <- player_info$player_last_season
+player_exp_no_na <- player_info$player_exp_no_na
+player_teams <- player_info$player_teams
 
 # ---- UI----
 ui <- fluidPage(
@@ -155,7 +211,7 @@ ui <- fluidPage(
             h4("Search by player name :"),
             sidebarPanel(
               width = 8,
-              textInput("search", "", placeholder = "Search by player full name (first_name last_name)")),
+              textInput("player_search", "", placeholder = "Search by player full name (first_name last_name)")),
             fluidRow(column(width = 3, align = "center", img(src=image_url, width=100)),
                      column(width = 8, align = "center",
                             fluidRow(player),
@@ -196,8 +252,9 @@ ui <- fluidPage(
               mainPanel(
                 width = 9,
                 fluidRow(
-                  column(width = 6, plotlyOutput(outputId = 'plot_by_team_pts')),
-                  column(width = 6, plotlyOutput(outputId = "plot_by_team_g"))
+                  column(width = 4, plotlyOutput(outputId = 'plot_by_team_pts')),
+                  column(width = 4, plotlyOutput(outputId = "plot_by_team_g")),
+                  column(width = 4, plotOutput(outputId = "plot_by_team_radar"))
                 )
               )
             ),
@@ -222,6 +279,33 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   thematic::thematic_shiny()
+  
+  # Define reactive to get input value
+  observeEvent(input$player_search, {
+    player_name <<- input$player_search
+    print(player_name)
+    
+    url_status <- get_player_web(player_name)$response
+    
+    if (url_status == 200){
+      print(paste0("The URL ", url, " is accessible."))
+      player_info <- update_player(player)
+      
+      image_url <- player_info$image_url
+      player_positions <- player_info$player_positions
+      player_age <- player_info$player_age
+      player_exp <- player_info$player_exp
+      player_first_season <- player_info$player_first_season
+      player_last_season <- player_info$player_last_season
+      player_exp_no_na <- player_info$player_exp_no_na
+      player_teams <- player_info$player_teams
+    }
+  })
+  
+  # search_text <- reactive({
+  #   player_name <- input$player_search
+  #   print(player_name)
+  # })
   
   output$plot_by_year_pts <- renderPlotly({
     
@@ -275,7 +359,7 @@ server <- function(input, output, session) {
       Blocks = avg_blk
     ) |> rownames_to_column(var = "Category")
     
-    print(player_matrix)
+    # print(player_matrix)
     
     # Find the maximum value in the data frame
     max_val <-max(player_matrix[, -1])
@@ -289,7 +373,7 @@ server <- function(input, output, session) {
                                ceiling(grid_vals[grid_mid_idx]),
                                grid_vals[length(grid_vals)])
     
-    print(grid_vals_for_ggradar)
+    # print(grid_vals_for_ggradar)
     
     # Highest season avgs in NBA regular seasons
     nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
@@ -351,6 +435,75 @@ server <- function(input, output, session) {
         ggtitle(paste0(player, ' played for \n', input$team_select)) +
         geom_point()+
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  })
+  
+  output$plot_by_team_radar <- renderPlot({
+    
+    team_selected <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3, 
+                            stop = nchar(input$team_select) - 1)
+    
+    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
+    
+    avg_pts <- mean(data_by_team$`PTS per game`)
+    avg_trb <- mean(data_by_team$`TRB per game`)
+    avg_ast <- mean(data_by_team$`AST per game`)
+    avg_stl <- mean(data_by_team$`STL per game`)
+    avg_blk <- mean(data_by_team$`BLK per game`)
+    
+    # Create a matrix of player data
+    player_matrix <- data.frame(
+      Points = avg_pts,
+      Rebounds = avg_trb,
+      Assists = avg_ast,
+      Steals = avg_stl,
+      Blocks = avg_blk
+    ) |> rownames_to_column(var = "Category")
+    
+    # print(player_matrix)
+    
+    # Find the maximum value in the data frame
+    max_val <-max(player_matrix[, -1])
+    grid_vals <- seq(0, max_val, length.out = 5)
+    grid_max <- ceiling(max(grid_vals) * 1.1)
+    grid_vals[length(grid_vals)] <- grid_max
+    
+    grid_mid_idx <- (length(grid_vals) + 1) / 2
+    
+    grid_vals_for_ggradar <- c(grid_vals[1],
+                               ceiling(grid_vals[grid_mid_idx]),
+                               grid_vals[length(grid_vals)])
+    
+    # print(grid_vals_for_ggradar)
+    
+    # Highest season avgs in NBA regular seasons
+    nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
+    nba_reg_high_trb <- 27.2 # Wilt Chamberlain*	
+    nba_reg_high_ast <- 14.5 # John Stockton
+    nba_reg_high_stl <- 3.67 # Alvin Robertson
+    nba_reg_high_blk <- 3.5 # Mark Eaton	
+    
+    nba_reg_high <- c(ceiling(nba_reg_high_pts),
+                      ceiling(nba_reg_high_trb),
+                      ceiling(nba_reg_high_ast),
+                      ceiling(nba_reg_high_stl),
+                      ceiling(nba_reg_high_blk))
+    # print(nba_reg_high)
+    
+    ggradar(
+      player_matrix, 
+      values.radar = grid_vals_for_ggradar,
+      grid.min = grid_vals[1], 
+      grid.mid = ceiling(grid_vals[grid_mid_idx]), 
+      grid.max = grid_vals[length(grid_vals)],
+      # Polygons
+      group.line.width = 1, 
+      group.point.size = 3,
+      group.colours = "#00AFBB",
+      # Background and grid lines
+      background.circle.colour = "white",
+      gridline.mid.colour = "grey"
+    )
   })
   
 }
