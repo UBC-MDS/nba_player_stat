@@ -165,7 +165,7 @@ ui <- fluidPage(
             h4("Filters :"),
             sidebarLayout(
               sidebarPanel(
-                width = 4,
+                width = 3,
                 sliderInput(
                   inputId = "careeryearslider",
                   label = "Career Year",
@@ -177,6 +177,7 @@ ui <- fluidPage(
                 )
               ),
               mainPanel(
+                width = 9,
                 fluidRow(
                   column(width = 4, plotlyOutput(outputId = "plot_by_year_pts")),
                   column(width = 4, plotlyOutput(outputId = "plot_by_year_g")),
@@ -186,12 +187,14 @@ ui <- fluidPage(
             ),
             sidebarLayout(
               sidebarPanel(
+                width = 3,
                 selectInput(inputId='team_select',
                             label="Select the team",
                             choices = player_teams,
                             selected = 'wt')
               ),
               mainPanel(
+                width = 9,
                 fluidRow(
                   column(width = 6, plotlyOutput(outputId = 'plot_by_team_pts')),
                   column(width = 6, plotlyOutput(outputId = "plot_by_team_g"))
@@ -232,7 +235,8 @@ server <- function(input, output, session) {
         ggtitle(paste0(player, ' Points per game between ', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
-        geom_point())
+        geom_point()+
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
   output$plot_by_year_g <- renderPlotly({
@@ -247,7 +251,8 @@ server <- function(input, output, session) {
         ggtitle(paste0(player, ' games played between ', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
-        geom_point())
+        geom_point()+
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
   output$plot_by_year_radar <- renderPlot({
@@ -307,7 +312,8 @@ server <- function(input, output, session) {
       ggplot(data_by_team, 
              aes(Season, `PTS per game`)) + 
         ggtitle(paste0(player, ' played for ', input$team_select)) +
-        geom_point())
+        geom_point()+
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
   output$plot_by_team_g <- renderPlotly({
@@ -322,7 +328,8 @@ server <- function(input, output, session) {
       ggplot(data_by_team, 
              aes(Season, G)) + 
         ggtitle(paste0(player, ' played for ', input$team_select)) +
-        geom_point())
+        geom_point()+
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
 }
