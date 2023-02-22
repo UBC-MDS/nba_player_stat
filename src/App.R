@@ -172,7 +172,8 @@ ui <- fluidPage(
                   min = as.integer(substr(player_first_season, start = 1, stop = 4)),
                   max = as.integer(substr(player_last_season, start = 1, stop = 4)),
                   value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
-                                       as.integer(substr(player_last_season, start = 1, stop = 4)))/2)
+                                       as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
+                  step = 1
                 )
               ),
               mainPanel(
