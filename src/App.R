@@ -180,7 +180,7 @@ update_player <- function(player) {
               player_teams = player_teams))
 }
 
-player <- 'Kobe Bryant'
+player <- str_to_title('Vince Carter')
 
 player_info <- update_player(player)
 
