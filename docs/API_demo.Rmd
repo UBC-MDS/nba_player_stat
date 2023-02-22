@@ -198,3 +198,46 @@ career_range_end <- 2000
 data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
 data_by_year
 ```
+
+```{r}
+# Create a list of vectors, where each vector corresponds to the grid values for a different category
+grid_values <- list(
+  Points = c(0, 5, 10, 15, 20, 25),
+  Rebounds = c(0, 5, 10, 15, 20),
+  Assists = c(0, 2.5, 5, 7.5, 10),
+  Steals = c(0, 0.5, 1, 1.5, 2),
+  Blocks = c(0, 0.5, 1, 1.5, 2)
+) 
+
+# Create a vector of maximum values for each category
+min_values <- as.numeric(apply(player_matrix, 2, min))
+max_values <- as.numeric(apply(player_matrix, 2, max))
+
+# Create a data frame of player data
+player_matrix <- data.frame(
+  Points = c(10),
+  Rebounds = c(8),
+  Assists = c(6),
+  Steals = c(1.5),
+  Blocks = c(1)
+)|> rownames_to_column(var = "Category")
+
+# Get the maximum value in the player data frame
+
+# Create the radar chart
+ggradar(
+  player_matrix,
+  values.radar = grid_values,
+  grid.min = min_values,
+  # grid.mid = 10 / 2,
+  grid.max = max_values,
+  group.line.width = 1,
+  group.point.size = 3,
+  group.colours = "#00AFBB",
+  background.circle.colour = "white",
+  gridline.mid.colour = "grey"
+)
+
+
+chart
+```

@@ -72,7 +72,7 @@ nba_teams_map <- function(team_code) {
 }
 
 # Add player name and player slug
-player <- "Jason Kidd"
+player <- "Kobe Bryant"
 player_name_split <- tolower(strsplit(player, " ")[[1]])
 slug_ln <- substr(player_name_split[2], start = 1, stop = 5)
 slug_fn <- substr(player_name_split[1], start = 1, stop = 2)
@@ -277,10 +277,40 @@ server <- function(input, output, session) {
     
     print(player_matrix)
     
+    # Find the maximum value in the data frame
+    max_val <-max(player_matrix[, -1])
+    grid_vals <- seq(0, max_val, length.out = 5)
+    grid_max <- ceiling(max(grid_vals) * 1.1)
+    grid_vals[length(grid_vals)] <- grid_max
+
+    grid_mid_idx <- (length(grid_vals) + 1) / 2
+    
+    grid_vals_for_ggradar <- c(grid_vals[1],
+                               ceiling(grid_vals[grid_mid_idx]),
+                               grid_vals[length(grid_vals)])
+    
+    print(grid_vals_for_ggradar)
+    
+    # Highest season avgs in NBA regular seasons
+    nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
+    nba_reg_high_trb <- 27.2 # Wilt Chamberlain*	
+    nba_reg_high_ast <- 14.5 # John Stockton
+    nba_reg_high_stl <- 3.67 # Alvin Robertson
+    nba_reg_high_blk <- 3.5 # Mark Eaton	
+    
+    nba_reg_high <- c(ceiling(nba_reg_high_pts),
+                      ceiling(nba_reg_high_trb),
+                      ceiling(nba_reg_high_ast),
+                      ceiling(nba_reg_high_stl),
+                      ceiling(nba_reg_high_blk))
+    # print(nba_reg_high)
+    
     ggradar(
       player_matrix, 
-      values.radar = c("0", "10", "20"),
-      grid.min = 0, grid.mid = 10, grid.max = 20,
+      values.radar = grid_vals_for_ggradar,
+      grid.min = grid_vals[1], 
+      grid.mid = ceiling(grid_vals[grid_mid_idx]), 
+      grid.max = grid_vals[length(grid_vals)],
       # Polygons
       group.line.width = 1, 
       group.point.size = 3,
