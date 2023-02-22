@@ -211,7 +211,8 @@ ui <- fluidPage(
             h4("Search by player name :"),
             sidebarPanel(
               width = 8,
-              textInput("player_search", "", placeholder = "Search by player full name (first_name last_name)")),
+              textInput("player_search", "", placeholder = "Search by player full name (first_name last_name)"),
+              actionButton("update_button", "Update Stats")),
             fluidRow(column(width = 3, align = "center", img(src=image_url, width=100)),
                      column(width = 8, align = "center",
                             fluidRow(player),
@@ -273,10 +274,10 @@ server <- function(input, output, session) {
   
   # Define reactive to get input value
   observeEvent(input$player_search, {
-    player_name <<- input$player_search
-    print(player_name)
+    player <<- input$player_search
+    # print(player)
     
-    url_status <- get_player_web(player_name)$response
+    url_status <- get_player_web(player)$response
     
     if (url_status == 200){
       print(paste0("The URL ", url, " is accessible."))
@@ -291,6 +292,13 @@ server <- function(input, output, session) {
       player_last_season <- player_info$player_last_season
       player_exp_no_na <- player_info$player_exp_no_na
       player_teams <- player_info$player_teams
+      
+      updateSliderInput(session, 
+                        "careeryearslider", 
+                        min = as.integer(substr(player_first_season, start = 1, stop = 4)),
+                        max = as.integer(substr(player_last_season, start = 1, stop = 4)),
+                        value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
+                                              as.integer(substr(player_last_season, start = 1, stop = 4)))/2),)
     }
   })
   
