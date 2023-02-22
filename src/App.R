@@ -302,6 +302,11 @@ server <- function(input, output, session) {
                         max = as.integer(substr(player_last_season, start = 1, stop = 4)),
                         value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
                                               as.integer(substr(player_last_season, start = 1, stop = 4)))/2),)
+      
+      updateSelectInput(session, 
+                        "team_select", 
+                        choices = player_teams)
+      
     }
   })
   
