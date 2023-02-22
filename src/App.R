@@ -262,16 +262,7 @@ ui <- fluidPage(
             fluidRow(column(width = 6, checkboxInput('change_sign','Team A'))),
             fluidRow(column(width = 6, checkboxInput('change_sign','Team B'))),
             fluidRow(column(width = 6, checkboxInput('change_sign','Team C'))),
-            fluidRow(column(width = 6, checkboxInput('change_sign','Team D')))),
-           # column(
-           #   width = 5,
-           #   h4("Points per game and shooting accuracy :"),
-           #   fluidRow(column(width = 8, align = "center", img(src="PTS.png", height='200px'))),
-           #   h4("Game played in each season :"),
-           #   fluidRow(column(width = 8, align = "center", img(src="GamePlayed.png", height='200px'))),
-           #   h4("Player Radar Chart :"),
-           #   fluidRow(column(width = 8, align = "center", img(src="PlayerRadar.png", height='250px'))),
-           # )
+            fluidRow(column(width = 6, checkboxInput('change_sign','Team D'))))
         )
 )
 
@@ -289,6 +280,7 @@ server <- function(input, output, session) {
     
     if (url_status == 200){
       print(paste0("The URL ", url, " is accessible."))
+      
       player_info <- update_player(player)
       
       image_url <- player_info$image_url
