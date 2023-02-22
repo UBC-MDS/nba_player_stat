@@ -273,18 +273,9 @@ server <- function(input, output, session) {
       Assists = avg_ast,
       Steals = avg_stl,
       Blocks = avg_blk
-    )
+    ) |> rownames_to_column(var = "Category")
     
     print(player_matrix)
-  
-    # # Create a vector of stat labels
-    # stat_labels <- rownames(player_matrix)
-    # 
-    # # Create a vector of maximum values for each stat
-    # max_values <- rep(20, length(stat_labels))
-    # 
-    # # Create the radar chart
-    # radarchart(player_matrix)
     
     ggradar(
       player_matrix, 
