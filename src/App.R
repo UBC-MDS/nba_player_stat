@@ -216,8 +216,8 @@ ui <- fluidPage(
               width = 8,
               textInput("player_search", "", placeholder = "Search by player full name (first_name last_name)"),
               actionButton("update_button", "Update Stats")),
-            fluidRow(column(width = 3, align = "center", img(src=image_url, width=100)),
-                     column(width = 8, align = "center",
+            fluidRow(column(width = 3, align = "center", img(id = "player_image", src=image_url, width=100)),
+                     column(id = "player_intro", width = 8, align = "center",
                             fluidRow(player),
                             fluidRow('Position:', player_positions),
                             fluidRow('Age:', player_age),
@@ -304,6 +304,15 @@ server <- function(input, output, session) {
       player_last_season <- player_info$player_last_season
       player_exp_no_na <- player_info$player_exp_no_na
       player_teams <- player_info$player_teams
+      
+      # updateImage(session, "player_image", src = image_url)
+      # 
+      # renderUI(session, 
+      #              "player_intro", 
+      #              fluidRow(player),
+      #              fluidRow('Position:', player_positions),
+      #              fluidRow('Age:', player_age),
+      #              fluidRow('Experience:', player_exp))
       
       updateSliderInput(session, 
                         "careeryearslider", 
