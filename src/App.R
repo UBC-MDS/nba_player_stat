@@ -275,6 +275,15 @@ server <- function(input, output, session) {
   
   thematic::thematic_shiny()
   
+  image_url <- player_info$image_url
+  player_positions <- player_info$player_positions
+  player_age <- player_info$player_age
+  player_exp <- player_info$player_exp
+  player_first_season <- player_info$player_first_season
+  player_last_season <- player_info$player_last_season
+  player_exp_no_na <- player_info$player_exp_no_na
+  player_teams <- player_info$player_teams
+  
   # Define reactive to get input value
   observeEvent(input$player_search, {
     player <<- str_to_title(input$player_search)
