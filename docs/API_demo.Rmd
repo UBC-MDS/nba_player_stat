@@ -20,6 +20,7 @@ date: "2023-02-15"
 #####################
 # Step 3: Load libraries
 #####################
+library(dplyr)
 library(plyr)
 library(tidyverse)
 library(rvest)
@@ -64,7 +65,398 @@ adv_stat <- url %>%
 # Merge stats tables.
 total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
 
-View(total_stats)
+# View(player_stats)
+```
 
-View(adv_stat)
+```{r}
+player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
+
+player_stats <- player_stats |>
+  mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
+         'AST per game' = round(player_stats$AST / player_stats$G, 2),
+         'STL per game' = round(player_stats$STL / player_stats$G, 2),
+         'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
+         'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+
+player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+
+player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+
+player_exp <- length(unique(player_exp_no_na$Age))
+
+player_first_season <- min(unique(player_exp_no_na$Season))
+player_last_season <- max(unique(player_exp_no_na$Season))
+
+player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+
+typeof(player_first_season)
+print(player_last_season)
+                                     
+print(player_exp)
+print(player_age)
+
+typeof(player_exp)
+
+```
+
+```{r}
+position_map <- function(pos) {
+  pos <- toupper(pos)  # convert input to all uppercase
+  switch(pos,
+         "PG" = "Point Guard",
+         "SG" = "Shooting Guard",
+         "SF" = "Small Forward",
+         "PF" = "Power Forward",
+         "C" = "Center")
+}
+
+```
+
+```{r}
+player_position_ls <- unique(player_exp_no_na$Pos)
+
+player_positions <- ''
+
+for (i in seq_along(player_position_ls)) {
+  player_positions <- paste0(player_positions, 
+                             position_map(player_position_ls[i]), 
+                             collapse = "")
+  if (i != length(player_position_ls)) {
+    player_positions <- paste0(player_positions, ' & ', collapse = "")
+  }
+}
+
+print(player_positions)
+
+```
+
+```{r}
+# Define a function to map NBA team codes to team names
+nba_teams_map <- function(team_code) {
+  teams <- list(ATL = "Atlanta Hawks",
+                BKN = "Brooklyn Nets",
+                BOS = "Boston Celtics",
+                CHA = "Charlotte Hornets",
+                CHI = "Chicago Bulls",
+                CLE = "Cleveland Cavaliers",
+                DAL = "Dallas Mavericks",
+                DEN = "Denver Nuggets",
+                DET = "Detroit Pistons",
+                GSW = "Golden State Warriors",
+                HOU = "Houston Rockets",
+                IND = "Indiana Pacers",
+                LAC = "Los Angeles Clippers",
+                LAL = "Los Angeles Lakers",
+                MEM = "Memphis Grizzlies",
+                MIA = "Miami Heat",
+                MIL = "Milwaukee Bucks",
+                MIN = "Minnesota Timberwolves",
+                NOP = "New Orleans Pelicans",
+                NJN = "Brooklyn Nets",
+                NYK = "New York Knicks",
+                OKC = "Oklahoma City Thunder",
+                ORL = "Orlando Magic",
+                PHI = "Philadelphia 76ers",
+                PHO = "Phoenix Suns",
+                PHX = "Phoenix Suns",
+                POR = "Portland Trail Blazers",
+                SAC = "Sacramento Kings",
+                SAS = "San Antonio Spurs",
+                TOR = "Toronto Raptors",
+                TOT = "Two Other Teams",
+                UTA = "Utah Jazz",
+                WAS = "Washington Wizards")
+  return(teams[[team_code]])
+}
+
+```
+
+```{r}
+player_team_ls <- unique(player_exp_no_na$Tm)
+
+player_teams <- c()
+
+for (team in player_team_ls) {
+  player_teams <- c(player_teams, nba_teams_map(team))
+}
+
+print(player_teams)
+```
+
+```{r}
+team <- 'DAL'
+    
+player_exp_no_na[player_exp_no_na$Tm == 'DAL',]
+
+typeof(player_exp_no_na$Tm)
+```
+
+```{r}
+career_range_start <- 1994
+career_range_end <- 2000
+
+data_by_year <- player_exp_no_na[player_exp_no_na$Season <= career_range_end + 1,]
+data_by_year
+```
+
+```{r}
+# Create a list of vectors, where each vector corresponds to the grid values for a different category
+grid_values <- list(
+  Points = c(0, 5, 10, 15, 20, 25),
+  Rebounds = c(0, 5, 10, 15, 20),
+  Assists = c(0, 2.5, 5, 7.5, 10),
+  Steals = c(0, 0.5, 1, 1.5, 2),
+  Blocks = c(0, 0.5, 1, 1.5, 2)
+) 
+
+# Create a vector of maximum values for each category
+min_values <- as.numeric(apply(player_matrix, 2, min))
+max_values <- as.numeric(apply(player_matrix, 2, max))
+
+# Create a data frame of player data
+player_matrix <- data.frame(
+  Points = c(10),
+  Rebounds = c(8),
+  Assists = c(6),
+  Steals = c(1.5),
+  Blocks = c(1)
+)|> rownames_to_column(var = "Category")
+
+# Get the maximum value in the player data frame
+
+# Create the radar chart
+ggradar(
+  player_matrix,
+  values.radar = grid_values,
+  grid.min = min_values,
+  # grid.mid = 10 / 2,
+  grid.max = max_values,
+  group.line.width = 1,
+  group.point.size = 3,
+  group.colours = "#00AFBB",
+  background.circle.colour = "white",
+  gridline.mid.colour = "grey"
+)
+
+
+chart
+```
+
+```{r}
+position_map <- function(pos) {
+  pos <- toupper(pos)  # convert input to all uppercase
+  switch(pos,
+         "PG" = "Point Guard",
+         "SG" = "Shooting Guard",
+         "SF" = "Small Forward",
+         "PF" = "Power Forward",
+         "C" = "Center")
+}
+
+nba_teams_map <- function(team_code) {
+  teams <- list(ATL = "Atlanta Hawks (ATL)",
+                BKN = "Brooklyn Nets (BKN)",
+                BOS = "Boston Celtics (BOS)",
+                CHA = "Charlotte Hornets (CHA)",
+                CHI = "Chicago Bulls (CHI)",
+                CLE = "Cleveland Cavaliers (CLE)",
+                DAL = "Dallas Mavericks (DAL)",
+                DEN = "Denver Nuggets (DEN)",
+                DET = "Detroit Pistons (DET)",
+                GSW = "Golden State Warriors (GSW)",
+                HOU = "Houston Rockets (HOU)",
+                IND = "Indiana Pacers (IND)",
+                LAC = "Los Angeles Clippers (LAC)",
+                LAL = "Los Angeles Lakers (LAL)",
+                MEM = "Memphis Grizzlies (MEM)",
+                MIA = "Miami Heat (MIA)",
+                MIL = "Milwaukee Bucks (MIL)",
+                MIN = "Minnesota Timberwolves (MIN)",
+                NOP = "New Orleans Pelicans (NOP)",
+                NJN = "Brooklyn Nets (NJN)",
+                NYK = "New York Knicks (NYK)",
+                OKC = "Oklahoma City Thunder (OKC)",
+                ORL = "Orlando Magic (ORL)",
+                PHI = "Philadelphia 76ers (PHI)",
+                PHO = "Phoenix Suns (PHO)",
+                PHX = "Phoenix Suns (PHX)",
+                POR = "Portland Trail Blazers (POR)",
+                SAC = "Sacramento Kings (SAC)",
+                SAS = "San Antonio Spurs (SAS)",
+                TOR = "Toronto Raptors (TOR)",
+                TOT = "Two Other Teams (TOT)",
+                UTA = "Utah Jazz (UTA)",
+                WAS = "Washington Wizards (WAS)")
+  return(teams[[team_code]])
+}
+```
+
+```{r}
+update_player <- function(player) {
+  player_name_split <- tolower(strsplit(player, " ")[[1]])
+  slug_ln <- substr(player_name_split[2], start = 1, stop = 5)
+  slug_fn <- substr(player_name_split[1], start = 1, stop = 2)
+  slug <- paste0(slug_ln, slug_fn, '01')#"bryanko01" 
+  
+  # define player page URL and player image URL
+  url <- paste0("https://www.basketball-reference.com/players/",substr(slug,1,1),"/",slug,".html")
+  image_url <- paste0("https://www.basketball-reference.com/req/202106291/images/players/",slug,".jpg")
+  
+  print(image_url)
+  
+  # Read total stats
+  ttl_stat <- url %>%
+    read_html %>%
+    html_node("#totals") %>% 
+    html_table()
+  
+  # Read advanced stats
+  adv_stat <- url %>%
+    read_html %>%
+    html_node("#advanced") %>% 
+    html_table()
+  
+  # Merge stats tables
+  total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
+  
+  # Prepare player stats table
+  player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
+  
+  player_stats <- player_stats |>
+    mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
+           'AST per game' = round(player_stats$AST / player_stats$G, 2),
+           'STL per game' = round(player_stats$STL / player_stats$G, 2),
+           'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
+           'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+  
+  # remove missing values
+  player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+  
+  player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+  
+  # Get PLayer Experience
+  player_exp <- length(unique(player_exp_no_na$Age))
+  
+  # Get Player career year range
+  player_first_season <- min(unique(player_exp_no_na$Season))
+  player_last_season <- max(unique(player_exp_no_na$Season))
+  
+  # Get PLayer Age
+  player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+  
+  # Get PLayer Positions
+  player_position_ls <- unique(player_exp_no_na$Pos)
+  
+  print(player_position_ls)
+  
+  player_positions <- ''
+  
+  for (i in seq_along(player_position_ls)) {
+    player_positions <- paste0(player_positions, 
+                               position_map(player_position_ls[i]), 
+                               collapse = "")
+    if (i != length(player_position_ls)) {
+      player_positions <- paste0(player_positions, ' & ', collapse = "")
+    }
+  }
+  
+  # Get PLayer teams
+  player_team_ls <- unique(player_exp_no_na$Tm)
+  
+  player_teams <- c()
+  
+  for (team in player_team_ls) {
+    player_teams <- c(player_teams, nba_teams_map(team))
+  }
+  
+  return(list(image_url = image_url, 
+              player_exp_no_na = player_exp_no_na,
+              player_exp = player_exp,
+              player_first_season = player_first_season,
+              player_last_season = player_last_season,
+              player_age = player_age,
+              player_positions = player_positions,
+              player_teams = player_teams))
+}
+```
+
+```{r}
+info <- update_player('Kobe Bryant')
+```
+
+```{r}
+# Add player name and player slug
+player <- "Kobe Bryant"
+player_name_split <- tolower(strsplit(player, " ")[[1]])
+slug_ln <- substr(player_name_split[2], start = 1, stop = 5)
+slug_fn <- substr(player_name_split[1], start = 1, stop = 2)
+slug <- paste0(slug_ln, slug_fn, '01')#"bryanko01" 
+
+# define player page URL and player image URL
+url <- paste0("https://www.basketball-reference.com/players/",substr(slug,1,1),"/",slug,".html")
+image_url <- paste0("https://www.basketball-reference.com/req/202106291/images/players/",slug,".jpg")
+
+# Read total stats
+ttl_stat <- url %>%
+  read_html %>%
+  html_node("#totals") %>% 
+  html_table()
+
+# Read advanced stats
+adv_stat <- url %>%
+  read_html %>%
+  html_node("#advanced") %>% 
+  html_table()
+
+# Merge stats tables
+total_stats <- merge(ttl_stat, adv_stat, by=c("Season","Age", "Tm", "Lg", "Pos", "G", "MP"))
+
+# Prepare player stats table
+player_stats <- total_stats |> select(c('Season', 'Age', 'Tm', 'Pos', 'G', 'FG%', 'TRB', 'AST', 'STL', 'BLK', 'PTS'))
+
+player_stats <- player_stats |>
+  mutate('TRB per game' = round(player_stats$TRB / player_stats$G, 2),
+         'AST per game' = round(player_stats$AST / player_stats$G, 2),
+         'STL per game' = round(player_stats$STL / player_stats$G, 2),
+         'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
+         'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+
+# remove missing values
+player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+
+player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+
+# Get PLayer Experience
+player_exp <- length(unique(player_exp_no_na$Age))
+
+# Get Player career year range
+player_first_season <- min(unique(player_exp_no_na$Season))
+player_last_season <- max(unique(player_exp_no_na$Season))
+
+# Get PLayer Age
+player_age <- max(player_exp_no_na$Age, na.rm = TRUE)
+
+# Get PLayer Positions
+player_position_ls <- unique(player_exp_no_na$Pos)
+
+player_positions <- ''
+
+for (i in seq_along(player_position_ls)) {
+  player_positions <- paste0(player_positions, 
+                             position_map(player_position_ls[i]), 
+                             collapse = "")
+  if (i != length(player_position_ls)) {
+    player_positions <- paste0(player_positions, ' & ', collapse = "")
+  }
+}
+
+# Get PLayer teams
+player_team_ls <- unique(player_exp_no_na$Tm)
+
+player_teams <- c()
+
+for (team in player_team_ls) {
+  player_teams <- c(player_teams, nba_teams_map(team))
+}
+
 ```
