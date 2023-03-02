@@ -383,7 +383,7 @@ server <- function(input, output, session) {
     data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
     
     # Filer by Team (by Sun)
-    selected_team <- substr(input$team_select, 
+    selected_team <- substr(input$team_select,
                             start = nchar(input$team_select) - 3,
                             stop = nchar(input$team_select) - 1)
     data_by_year_team <- data_by_year |> filter(Tm == selected_team)
@@ -417,16 +417,25 @@ server <- function(input, output, session) {
     data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
     
     # Filer by Team (by Sun)
-    # ...
+    # selected_team <- substr(input$team_select, 
+    #                         start = nchar(input$team_select) - 3,
+    #                         stop = nchar(input$team_select) - 1)
+    # data_by_year_team <- data_by_year |> filter(Tm == selected_team)
     
     # Filter Whole Career (by Peng)
-    # ...
+    if (input$wholecareer_tick) {
+      displayed_data <- player_exp_no_na
+      text_title <- 'Games Played for the Whole Career '
+    } else {
+      displayed_data <- data_by_year_team
+      text_title <- paste0('Games played between ', 
+                           min_year_input, ' and ', max_year_input, ' playing for ', input$team_select)
+    }
     
     ggplotly( 
-      ggplot(data_by_year, 
+      ggplot(displayed_data, 
              aes(Season, G)) + 
-        ggtitle(paste0('Games played between ', 
-                       min_year_input, ' and ', max_year_input)) +
+        ggtitle(text_title) +
         geom_bar(stat = 'summary', fun = sum) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
@@ -439,18 +448,25 @@ server <- function(input, output, session) {
     data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
     
     # Filer by Team (by Sun)
-    # ...
+    # selected_team <- substr(input$team_select, 
+    #                         start = nchar(input$team_select) - 3,
+    #                         stop = nchar(input$team_select) - 1)
+    # data_by_year_team <- data_by_year |> filter(Tm == selected_team)
     
     # Filter Whole Career (by Peng)
-    # ...
+    if (input$wholecareer_tick) {
+      displayed_data <- player_exp_no_na
+    } else {
+      displayed_data <- data_by_year_team
+    }
     
     # Create a matrix of player data
     player_matrix <- data.frame(
-      Points = mean(data_by_year$`PTS per game`),
-      Assists = mean(data_by_year$`AST per game`),
-      Steals = mean(data_by_year$`STL per game`),
-      Rebounds = mean(data_by_year$`TRB per game`),
-      Blocks = mean(data_by_year$`BLK per game`)
+      Points = mean(displayed_data$`PTS per game`),
+      Assists = mean(displayed_data$`AST per game`),
+      Steals = mean(displayed_data$`STL per game`),
+      Rebounds = mean(displayed_data$`TRB per game`),
+      Blocks = mean(displayed_data$`BLK per game`)
     ) |> rownames_to_column(var = "Category")
     # print(player_matrix)
     
