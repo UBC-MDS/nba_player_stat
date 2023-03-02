@@ -22,9 +22,10 @@ library(httr)
 # For capitalize the name
 library(stringr)
 
+
 # Read the dataset from the specified location in the application file directory
 #dataset <-
-  #read.csv("../data/preload_data_player_name.csv")
+#read.csv("../data/preload_data_player_name.csv")
 
 # Using real time api to load nba player stats data
 
@@ -194,8 +195,8 @@ player_info <- update_player(player)
 #   player_exp_no_na = player_info$player_exp_no_na,
 #   player_teams = player_info$player_teams
 # )
-  
-  
+
+
 image_url <- player_info$image_url
 player_positions <- player_info$player_positions
 player_age <- player_info$player_age
@@ -205,72 +206,104 @@ player_last_season <- player_info$player_last_season
 player_exp_no_na <- player_info$player_exp_no_na
 player_teams <- player_info$player_teams
 
-# ---- UI----
+
+# Define UI for application that draws a histogram
 ui <- fluidPage(
-  theme = bslib::bs_theme(bootswatch = "journal"),
-  titlePanel(title=div(img(src="nba_logo.png", height='50px'), "NBA Player Stats Application Dashboard")),
-  fluidRow(column(
-            width = 11,
-            h4("Search by player name :"),
-            sidebarPanel(
-              width = 8,
-              textInput("player_search", "", placeholder = "Search by player full name (first_name last_name)"),
-              actionButton("update_button", "Update Stats")),
-            fluidRow(column(width = 3, align = "center", img(id = "player_image", src=image_url, width=100)),
-                     column(id = "player_intro", width = 8, align = "center",
-                            fluidRow(player),
-                            fluidRow('Position:', player_positions),
-                            fluidRow('Age:', player_age),
-                            fluidRow('Experience:', player_exp))),
-            h4("Filters :"),
-            sidebarLayout(
-              sidebarPanel(
-                width = 3,
-                sliderInput(
-                  inputId = "careeryearslider",
-                  label = "Career Year",
-                  min = as.integer(substr(player_first_season, start = 1, stop = 4)),
-                  max = as.integer(substr(player_last_season, start = 1, stop = 4)),
-                  value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
-                                       as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
-                  step = 1
-                )
-              ),
-              mainPanel(
-                width = 9,
-                fluidRow(
-                  column(width = 4, plotlyOutput(outputId = "plot_by_year_pts")),
-                  column(width = 4, plotlyOutput(outputId = "plot_by_year_g")),
-                  column(width = 4, plotOutput(outputId = "plot_by_year_radar"))
-                )
-              )
-            ),
-            sidebarLayout(
-              sidebarPanel(
-                width = 3,
-                selectInput(inputId='team_select',
-                            label="Select the team",
-                            choices = player_teams,
-                            selected = 'wt')
-              ),
-              mainPanel(
-                width = 9,
-                fluidRow(
-                  column(width = 4, plotlyOutput(outputId = 'plot_by_team_pts')),
-                  column(width = 4, plotlyOutput(outputId = "plot_by_team_g")),
-                  column(width = 4, plotOutput(outputId = "plot_by_team_radar"))
-                )
-              )
-            ),
-            fluidRow(column(width = 2, "Team(s)")),
-            fluidRow(column(width = 6, checkboxInput('change_sign','Team A'))),
-            fluidRow(column(width = 6, checkboxInput('change_sign','Team B'))),
-            fluidRow(column(width = 6, checkboxInput('change_sign','Team C'))),
-            fluidRow(column(width = 6, checkboxInput('change_sign','Team D'))))
-        )
+  theme = bslib::bs_theme(bootswatch="journal"),
+  titlePanel(title=div(img(src="nba_logo.png", height='100px'), "NBA Player Stats Application Dashboard", align="center")),
+  h6(" "),
+  sidebarLayout(
+    sidebarPanel(
+      column(width = 12,
+             
+             # First part - Filter by Name (by Chen)
+             h6("Search by player name :"),
+             textInput("player_search", "", placeholder="Search by player full name (first_name last_name)"),
+             actionButton("update_button", "Update Stats"),
+             
+             # Second Part - Player Description
+             h6(" "),
+             fluidRow(column(width=4, align="center", img(id="player_image", src=image_url, width=100)),
+                      column(id = "player_intro", width = 8, align = "left",
+                             # fluidRow(player),
+                             # fluidRow(player_positions),
+                             # fluidRow('Age:', player_age),
+                             # fluidRow('Experience:', player_exp))),
+                             fluidRow(h2(as.character(player))), 
+                             fluidRow(h6('Position:')),
+                             fluidRow(h6(player_positions)),
+                             fluidRow(h6('Age:',player_age)),
+                             fluidRow(h6('Experience:', player_exp, 'yrs.'))
+                      )),
+             
+             # Third Part - Filter by Year (by Nate)
+             h1(" "),
+             h1(" "),
+             h1(" "),
+             h1(" "),
+             sliderInput(
+               inputId = "careeryearslider",
+               label = "Career Year",
+               min = as.integer(substr(player_first_season, start = 1, stop = 4)),
+               max = as.integer(substr(player_last_season, start = 1, stop = 4)),
+               value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
+                                     as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
+               step = 1),
+             
+             # Forth Part - Filter Team (by Sun)
+             h1(" "),
+             h1(" "),
+             h1(" "),
+             h1(" "),
+             selectInput(inputId='team_select',
+                         label="Select the team",
+                         choices = player_teams,
+                         selected = 'wt'),
+             
+             # Fifth Part - Select Whole Career (by Peng)
+             h1(" "),
+             h1(" "),
+             checkboxInput('wholecareer_tick','Whole Career Statistics'),
+             
+             # Add spacing at bottom of sidebarLayout
+             h3(" "),
+             
+      )
+    ),
+    mainPanel(
+      column(width = 12, 
+             # fluidRow(plotlyOutput(outputId = "plot_by_year_pts")),
+             # fluidRow(plotlyOutput(outputId = "plot_by_year_g")),
+             # fluidRow(plotOutput(outputId = "plot_by_year_radar"))
+             column(width=10, align="center",
+                    plotlyOutput(
+                      outputId = "plot_by_year_pts",
+                      width = "100%",
+                      height = "220px",
+                      inline = FALSE,
+                      reportTheme = TRUE
+                    ),
+                    plotlyOutput(
+                      outputId = "plot_by_year_g",
+                      width = "100%",
+                      height = "220px",
+                      inline = FALSE,
+                      reportTheme = TRUE
+                    ),
+                    plotOutput(
+                      outputId = "plot_by_year_radar",
+                      width = "100%",
+                      height = "325px",
+                    )
+             ),
+             
+      )
+    )
+    
+  )
 )
 
-# ---- Backend ----
+# Define server logic required to draw a histogram
 server <- function(input, output, session) {
   
   thematic::thematic_shiny()
@@ -336,32 +369,30 @@ server <- function(input, output, session) {
   output$plot_by_year_pts <- renderPlotly({
     
     year_input <- as.integer(input$careeryearslider)
-    
     data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
-    
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' Points per game between \n', 
+        ggtitle(paste0(player, ' Points per game between ', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
-        geom_point()+
+        # geom_point() +
+        geom_bar(stat = 'summary', fun = sum) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
   output$plot_by_year_g <- renderPlotly({
     
     year_input <- as.integer(input$careeryearslider)
-    
     data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
-    
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, G)) + 
-        ggtitle(paste0(player, ' games played between \n', 
+        ggtitle(paste0(player, ' Games played between ', 
                        as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
                        year_input)) +
-        geom_point()+
+        # geom_point() +
+        geom_bar(stat = 'summary', fun = sum) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
@@ -369,7 +400,6 @@ server <- function(input, output, session) {
     year_input <- as.integer(input$careeryearslider)
     
     data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
-    
     avg_pts <- mean(data_by_year$`PTS per game`)
     avg_trb <- mean(data_by_year$`TRB per game`)
     avg_ast <- mean(data_by_year$`AST per game`)
@@ -392,7 +422,7 @@ server <- function(input, output, session) {
     grid_vals <- seq(0, max_val, length.out = 5)
     grid_max <- ceiling(max(grid_vals) * 1.1)
     grid_vals[length(grid_vals)] <- grid_max
-
+    
     grid_mid_idx <- (length(grid_vals) + 1) / 2
     
     grid_vals_for_ggradar <- c(grid_vals[1],
@@ -436,9 +466,7 @@ server <- function(input, output, session) {
     team_selected <- substr(input$team_select, 
                             start = nchar(input$team_select) - 3, 
                             stop = nchar(input$team_select) - 1)
-    
     data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    
     ggplotly( 
       ggplot(data_by_team, 
              aes(Season, `PTS per game`)) + 
@@ -452,9 +480,7 @@ server <- function(input, output, session) {
     team_selected <- substr(input$team_select, 
                             start = nchar(input$team_select) - 3, 
                             stop = nchar(input$team_select) - 1)
-    
     data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    
     ggplotly( 
       ggplot(data_by_team, 
              aes(Season, G)) + 
@@ -468,9 +494,7 @@ server <- function(input, output, session) {
     team_selected <- substr(input$team_select, 
                             start = nchar(input$team_select) - 3, 
                             stop = nchar(input$team_select) - 1)
-    
     data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    
     avg_pts <- mean(data_by_team$`PTS per game`)
     avg_trb <- mean(data_by_team$`TRB per game`)
     avg_ast <- mean(data_by_team$`AST per game`)
@@ -532,6 +556,8 @@ server <- function(input, output, session) {
     )
   })
   
+  
 }
 
-shinyApp(ui, server)
+# Run the application 
+shinyApp(ui = ui, server = server)
