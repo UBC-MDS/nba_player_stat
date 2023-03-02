@@ -241,13 +241,21 @@ ui <- fluidPage(
              h1(" "),
              h1(" "),
              h1(" "),
+             # sliderInput(
+             #   inputId = "careeryearslider",
+             #   label = "Career Year",
+             #   min = as.integer(substr(player_first_season, start = 1, stop = 4)),
+             #   max = as.integer(substr(player_last_season, start = 1, stop = 4)),
+             #   value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
+             #                         as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
+             #   step = 1),
              sliderInput(
                inputId = "careeryearslider",
                label = "Career Year",
                min = as.integer(substr(player_first_season, start = 1, stop = 4)),
                max = as.integer(substr(player_last_season, start = 1, stop = 4)),
-               value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
-                                     as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
+               value = c(as.integer(substr(player_first_season, start = 1, stop = 4)),
+                         as.integer(substr(player_last_season, start = 1, stop = 4))),
                step = 1),
              
              # Forth Part - Filter Team (by Sun)
@@ -263,7 +271,7 @@ ui <- fluidPage(
              # Fifth Part - Select Whole Career (by Peng)
              h1(" "),
              h1(" "),
-             checkboxInput('wholecareer_tick','Whole Career Statistics'),
+             checkboxInput('wholecareer_tick','Whole Career Statistics', value = FALSE),
              
              # Add spacing at bottom of sidebarLayout
              h3(" "),
@@ -277,23 +285,23 @@ ui <- fluidPage(
              # fluidRow(plotOutput(outputId = "plot_by_year_radar"))
              column(width=10, align="center",
                     plotlyOutput(
-                      outputId = "plot_by_year_pts",
+                      outputId = "plot_pts",
                       width = "100%",
                       height = "220px",
                       inline = FALSE,
                       reportTheme = TRUE
                     ),
                     plotlyOutput(
-                      outputId = "plot_by_year_g",
+                      outputId = "plot_game",
                       width = "100%",
                       height = "220px",
                       inline = FALSE,
                       reportTheme = TRUE
                     ),
                     plotOutput(
-                      outputId = "plot_by_year_radar",
+                      outputId = "plot_radar",
                       width = "100%",
-                      height = "325px",
+                      height = "225px",
                     )
              ),
              
@@ -321,14 +329,11 @@ server <- function(input, output, session) {
   observeEvent(input$player_search, {
     player <<- str_to_title(input$player_search)
     # print(player)
-    
     url_status <- get_player_web(player)$response
     
     if (url_status == 200){
-      print(paste0("The URL ", url, " is accessible."))
-      
+      # print(paste0("The URL ", url, " is accessible."))
       player_info <- update_player(player)
-      
       image_url <- player_info$image_url
       player_positions <- player_info$player_positions
       player_age <- player_info$player_age
@@ -351,13 +356,17 @@ server <- function(input, output, session) {
                         "careeryearslider", 
                         min = as.integer(substr(player_first_season, start = 1, stop = 4)),
                         max = as.integer(substr(player_last_season, start = 1, stop = 4)),
-                        value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
-                                              as.integer(substr(player_last_season, start = 1, stop = 4)))/2),)
-      
+                        # value = as.integer((as.integer(substr(player_first_season, start = 1, stop = 4)) + 
+                        #                       as.integer(substr(player_last_season, start = 1, stop = 4)))/2),
+                        value = c(as.integer(substr(player_first_season, start = 1, stop = 4)),
+                                  as.integer(substr(player_last_season, start = 1, stop = 4)))
+                        )
       updateSelectInput(session, 
                         "team_select", 
                         choices = player_teams)
-      
+      updatecheckboxInput(session, 
+                        'wholecareer_tick', 
+                        value = FALSE)
     }
   })
   
@@ -366,55 +375,83 @@ server <- function(input, output, session) {
   #   print(player_name)
   # })
   
-  output$plot_by_year_pts <- renderPlotly({
+  output$plot_pts <- renderPlotly({
     
-    year_input <- as.integer(input$careeryearslider)
-    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
+    # Filter by Year (by Nate)
+    min_year_input <- as.integer(input$careeryearslider[1])
+    max_year_input <- as.integer(input$careeryearslider[2])
+    data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
+    
+    # Filer by Team (by Sun)
+    selected_team <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3,
+                            stop = nchar(input$team_select) - 1)
+    data_by_year_team <- data_by_year |> filter(Tm == selected_team)
+    
+    # Filter Whole Career (by Peng)
+    if (input$wholecareer_tick) {
+      displayed_data <- player_exp_no_na
+      text_title <- 'Points/Games for the Whole Career '
+    } else {
+      displayed_data <- data_by_year_team
+      text_title <- paste0('Points/Games between ', 
+                           min_year_input, ' and ', max_year_input, ' playing for ', input$team_select)
+    }
+    
+    # Plot
     ggplotly( 
-      ggplot(data_by_year, 
-             aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' Points per game between ', 
-                       as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
-                       year_input)) +
-        # geom_point() +
+      ggplot(displayed_data, 
+             aes(Season, `PTS per game`, fill = `PTS per game`)) + 
+        guides(fill = "none") +
+        ggtitle(text_title) +
+        ylab('Points per games') +
         geom_bar(stat = 'summary', fun = sum) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
-  output$plot_by_year_g <- renderPlotly({
+  output$plot_game <- renderPlotly({
     
-    year_input <- as.integer(input$careeryearslider)
-    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
+    # Filter by Year (by Nate)
+    min_year_input <- as.integer(input$careeryearslider[1])
+    max_year_input <- as.integer(input$careeryearslider[2])
+    data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
+    
+    # Filer by Team (by Sun)
+    # ...
+    
+    # Filter Whole Career (by Peng)
+    # ...
+    
     ggplotly( 
       ggplot(data_by_year, 
              aes(Season, G)) + 
-        ggtitle(paste0(player, ' Games played between ', 
-                       as.integer(substr(player_first_season, start = 1, stop = 4)), ' and ', 
-                       year_input)) +
-        # geom_point() +
+        ggtitle(paste0('Games played between ', 
+                       min_year_input, ' and ', max_year_input)) +
         geom_bar(stat = 'summary', fun = sum) +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)))
   })
   
-  output$plot_by_year_radar <- renderPlot({
-    year_input <- as.integer(input$careeryearslider)
+  output$plot_radar <- renderPlot({
     
-    data_by_year <- player_exp_no_na[player_exp_no_na$Season <= year_input + 1,]
-    avg_pts <- mean(data_by_year$`PTS per game`)
-    avg_trb <- mean(data_by_year$`TRB per game`)
-    avg_ast <- mean(data_by_year$`AST per game`)
-    avg_stl <- mean(data_by_year$`STL per game`)
-    avg_blk <- mean(data_by_year$`BLK per game`)
+    # Filter by Year (by Nate)
+    min_year_input <- as.integer(input$careeryearslider[1])
+    max_year_input <- as.integer(input$careeryearslider[2])
+    data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
+    
+    # Filer by Team (by Sun)
+    # ...
+    
+    # Filter Whole Career (by Peng)
+    # ...
     
     # Create a matrix of player data
     player_matrix <- data.frame(
-      Points = avg_pts,
-      Rebounds = avg_trb,
-      Assists = avg_ast,
-      Steals = avg_stl,
-      Blocks = avg_blk
+      Points = mean(data_by_year$`PTS per game`),
+      Assists = mean(data_by_year$`AST per game`),
+      Steals = mean(data_by_year$`STL per game`),
+      Rebounds = mean(data_by_year$`TRB per game`),
+      Blocks = mean(data_by_year$`BLK per game`)
     ) |> rownames_to_column(var = "Category")
-    
     # print(player_matrix)
     
     # Find the maximum value in the data frame
@@ -422,13 +459,10 @@ server <- function(input, output, session) {
     grid_vals <- seq(0, max_val, length.out = 5)
     grid_max <- ceiling(max(grid_vals) * 1.1)
     grid_vals[length(grid_vals)] <- grid_max
-    
     grid_mid_idx <- (length(grid_vals) + 1) / 2
-    
     grid_vals_for_ggradar <- c(grid_vals[1],
                                ceiling(grid_vals[grid_mid_idx]),
                                grid_vals[length(grid_vals)])
-    
     # print(grid_vals_for_ggradar)
     
     # Highest season avgs in NBA regular seasons
@@ -451,6 +485,7 @@ server <- function(input, output, session) {
       grid.min = grid_vals[1], 
       grid.mid = ceiling(grid_vals[grid_mid_idx]), 
       grid.max = grid_vals[length(grid_vals)],
+      axis.label.size = 4,
       # Polygons
       group.line.width = 1, 
       group.point.size = 3,
@@ -461,100 +496,97 @@ server <- function(input, output, session) {
     )
   })
   
-  output$plot_by_team_pts <- renderPlotly({
-    
-    team_selected <- substr(input$team_select, 
-                            start = nchar(input$team_select) - 3, 
-                            stop = nchar(input$team_select) - 1)
-    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    ggplotly( 
-      ggplot(data_by_team, 
-             aes(Season, `PTS per game`)) + 
-        ggtitle(paste0(player, ' played for \n', input$team_select)) +
-        geom_point()+
-        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
-  })
+  # output$plot_by_team_pts <- renderPlotly({
+  #   team_selected <- substr(input$team_select, 
+  #                           start = nchar(input$team_select) - 3, 
+  #                           stop = nchar(input$team_select) - 1)
+  #   data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
+  #   ggplotly( 
+  #     ggplot(data_by_team, 
+  #            aes(Season, `PTS per game`)) + 
+  #       ggtitle(paste0(player, ' played for \n', input$team_select)) +
+  #       geom_point()+
+  #       theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  # })
   
-  output$plot_by_team_g <- renderPlotly({
-    
-    team_selected <- substr(input$team_select, 
-                            start = nchar(input$team_select) - 3, 
-                            stop = nchar(input$team_select) - 1)
-    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    ggplotly( 
-      ggplot(data_by_team, 
-             aes(Season, G)) + 
-        ggtitle(paste0(player, ' played for \n', input$team_select)) +
-        geom_point()+
-        theme(axis.text.x = element_text(angle = 45, hjust = 1)))
-  })
+  # output$plot_by_team_g <- renderPlotly({
+  #   team_selected <- substr(input$team_select, 
+  #                           start = nchar(input$team_select) - 3, 
+  #                           stop = nchar(input$team_select) - 1)
+  #   data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
+  #   ggplotly( 
+  #     ggplot(data_by_team, 
+  #            aes(Season, G)) + 
+  #       ggtitle(paste0(player, ' played for \n', input$team_select)) +
+  #       geom_point()+
+  #       theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  # })
   
-  output$plot_by_team_radar <- renderPlot({
-    
-    team_selected <- substr(input$team_select, 
-                            start = nchar(input$team_select) - 3, 
-                            stop = nchar(input$team_select) - 1)
-    data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
-    avg_pts <- mean(data_by_team$`PTS per game`)
-    avg_trb <- mean(data_by_team$`TRB per game`)
-    avg_ast <- mean(data_by_team$`AST per game`)
-    avg_stl <- mean(data_by_team$`STL per game`)
-    avg_blk <- mean(data_by_team$`BLK per game`)
-    
-    # Create a matrix of player data
-    player_matrix <- data.frame(
-      Points = avg_pts,
-      Rebounds = avg_trb,
-      Assists = avg_ast,
-      Steals = avg_stl,
-      Blocks = avg_blk
-    ) |> rownames_to_column(var = "Category")
-    
-    # print(player_matrix)
-    
-    # Find the maximum value in the data frame
-    max_val <-max(player_matrix[, -1])
-    grid_vals <- seq(0, max_val, length.out = 5)
-    grid_max <- ceiling(max(grid_vals) * 1.1)
-    grid_vals[length(grid_vals)] <- grid_max
-    
-    grid_mid_idx <- (length(grid_vals) + 1) / 2
-    
-    grid_vals_for_ggradar <- c(grid_vals[1],
-                               ceiling(grid_vals[grid_mid_idx]),
-                               grid_vals[length(grid_vals)])
-    
-    # print(grid_vals_for_ggradar)
-    
-    # Highest season avgs in NBA regular seasons
-    nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
-    nba_reg_high_trb <- 27.2 # Wilt Chamberlain*	
-    nba_reg_high_ast <- 14.5 # John Stockton
-    nba_reg_high_stl <- 3.67 # Alvin Robertson
-    nba_reg_high_blk <- 3.5 # Mark Eaton	
-    
-    nba_reg_high <- c(ceiling(nba_reg_high_pts),
-                      ceiling(nba_reg_high_trb),
-                      ceiling(nba_reg_high_ast),
-                      ceiling(nba_reg_high_stl),
-                      ceiling(nba_reg_high_blk))
-    # print(nba_reg_high)
-    
-    ggradar(
-      player_matrix, 
-      values.radar = grid_vals_for_ggradar,
-      grid.min = grid_vals[1], 
-      grid.mid = ceiling(grid_vals[grid_mid_idx]), 
-      grid.max = grid_vals[length(grid_vals)],
-      # Polygons
-      group.line.width = 1, 
-      group.point.size = 3,
-      group.colours = "#00AFBB",
-      # Background and grid lines
-      background.circle.colour = "white",
-      gridline.mid.colour = "grey"
-    )
-  })
+  # output$plot_by_team_radar <- renderPlot({
+  #   team_selected <- substr(input$team_select, 
+  #                           start = nchar(input$team_select) - 3, 
+  #                           stop = nchar(input$team_select) - 1)
+  #   data_by_team <- player_exp_no_na[player_exp_no_na$Tm == team_selected,]
+  #   avg_pts <- mean(data_by_team$`PTS per game`)
+  #   avg_trb <- mean(data_by_team$`TRB per game`)
+  #   avg_ast <- mean(data_by_team$`AST per game`)
+  #   avg_stl <- mean(data_by_team$`STL per game`)
+  #   avg_blk <- mean(data_by_team$`BLK per game`)
+  #   
+  #   # Create a matrix of player data
+  #   player_matrix <- data.frame(
+  #     Points = avg_pts,
+  #     Rebounds = avg_trb,
+  #     Assists = avg_ast,
+  #     Steals = avg_stl,
+  #     Blocks = avg_blk
+  #   ) |> rownames_to_column(var = "Category")
+  #   
+  #   print(player_matrix)
+  #   
+  #   # Find the maximum value in the data frame
+  #   max_val <-max(player_matrix[, -1])
+  #   grid_vals <- seq(0, max_val, length.out = 5)
+  #   grid_max <- ceiling(max(grid_vals) * 1.1)
+  #   grid_vals[length(grid_vals)] <- grid_max
+  #   
+  #   grid_mid_idx <- (length(grid_vals) + 1) / 2
+  #   
+  #   grid_vals_for_ggradar <- c(grid_vals[1],
+  #                              ceiling(grid_vals[grid_mid_idx]),
+  #                              grid_vals[length(grid_vals)])
+  #   
+  #   # print(grid_vals_for_ggradar)
+  #   
+  #   # Highest season avgs in NBA regular seasons
+  #   nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
+  #   nba_reg_high_trb <- 27.2 # Wilt Chamberlain*	
+  #   nba_reg_high_ast <- 14.5 # John Stockton
+  #   nba_reg_high_stl <- 3.67 # Alvin Robertson
+  #   nba_reg_high_blk <- 3.5 # Mark Eaton	
+  #   
+  #   nba_reg_high <- c(ceiling(nba_reg_high_pts),
+  #                     ceiling(nba_reg_high_trb),
+  #                     ceiling(nba_reg_high_ast),
+  #                     ceiling(nba_reg_high_stl),
+  #                     ceiling(nba_reg_high_blk))
+  #   # print(nba_reg_high)
+  #   
+  #   ggradar(
+  #     player_matrix, 
+  #     values.radar = grid_vals_for_ggradar,
+  #     grid.min = grid_vals[1], 
+  #     grid.mid = ceiling(grid_vals[grid_mid_idx]), 
+  #     grid.max = grid_vals[length(grid_vals)],
+  #     # Polygons
+  #     group.line.width = 1, 
+  #     group.point.size = 3,
+  #     group.colours = "#00AFBB",
+  #     # Background and grid lines
+  #     background.circle.colour = "white",
+  #     gridline.mid.colour = "grey"
+  #   )
+  # })
   
   
 }
