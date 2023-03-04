@@ -4,7 +4,7 @@
 
 ## Welcome!
 
-Welcome! to the repository of the NBA Performance App :confetti_ball: ！
+Welcome! to the repository of the NBA Performance App  :confetti_ball:  ！
 
 Thank you for visiting the STEMM Role Models app project repository.
 
