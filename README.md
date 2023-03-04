@@ -53,7 +53,7 @@ Therefore, users can study each NBA player's performance in detail and understan
 
 
 ## Sketch
-<img src="img/dashboard_design_version1.png">
+<img src="img/dashboard_design_version2.png">
 
 ## Contributors
 The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut.
