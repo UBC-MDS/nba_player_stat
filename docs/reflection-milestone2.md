@@ -30,6 +30,14 @@ The development process has been following the course instructions, TA's feedbac
 
 We are considering to update the theme to make the app more attractive.
 
+The Search bar could be implemented with auto-suggestion as user inputting player name.
+
+The bar plots could include a few more information, such as FG% using a line chart.
+
+The dropdown list could have a better default, such as an option for all teams the player had played for.
+
+Last but not least, we still have some corner case to test for bugs, such as when the filters return no data fro the plots, we should have a better way to handle that.
+
 ### Limitations & Future improvements
 
 The app has provided a clear and straightforward way for users to check NBA players' performance data. No particular searching skills and software knowledge is needed for a general public user to access the dashboard. However, due to the time constraint, we would acknowledge there are some limitations that may not meet users' additional needs. Such as to check more categories of performance indicators beyond what we can provide, to compare different players' data on one plot, or to make inference or predictions based on the historic data. We welcome more feedback from the course instructor, TAs, and all users.
