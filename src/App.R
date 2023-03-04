@@ -215,7 +215,7 @@ ui <- fluidPage(
              h6(" "),
              fluidRow(column(width=4, align="center", img(id="player_image", src=image_url, width=100)),
                       column(id = "player_intro", width = 8, align = "left",
-                             fluidRow(h2(as.character(player))), 
+                             fluidRow(h2(id='player_full_name', as.character(player))), 
                              fluidRow(h6('Position:')),
                              fluidRow(h6(player_positions)),
                              fluidRow(h6('Age:',player_age)),
@@ -249,7 +249,7 @@ ui <- fluidPage(
              # Fifth Part - Select Whole Career (by Peng)
              h1(" "),
              h1(" "),
-             checkboxInput('wholecareer_tick','Whole Career Statistics', value = FALSE),
+             checkboxInput('wholecareer_tick','Whole Career Statistics', value = TRUE),
              
              # Add spacing at bottom of sidebarLayout
              h3(" "),
@@ -330,6 +330,7 @@ server <- function(input, output, session) {
         src = image_url
       })
       
+      updateTextInput(session, "player_full_name", as.character(player))
       # 
       # renderUI(session, 
       #              "player_intro", 
@@ -351,7 +352,7 @@ server <- function(input, output, session) {
                         "team_select", 
                         choices = player_teams)
     
-      updateCheckboxInput(session, "wholecareer_tick", value = FALSE)
+      updateCheckboxInput(session, "wholecareer_tick", value = TRUE)
       
       output$plot_pts <- renderPlotly({
         
