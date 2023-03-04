@@ -22,7 +22,10 @@ library(httr)
 # For capitalize the name
 library(stringr)
 
-library(shinyjs)
+library(htmltools)
+
+# library(shinyjs)
+# library(shinyBS)
 
 # Read the dataset from the specified location in the application file directory
 #dataset <-
@@ -199,7 +202,6 @@ player_teams <- player_info$player_teams
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  useShinyjs(),
   theme = bslib::bs_theme(bootswatch="journal"),
   titlePanel(title=div(img(src="nba_logo.png", height='100px'), "NBA Player Stats Application Dashboard", align="center")),
   h6(" "),
@@ -213,13 +215,47 @@ ui <- fluidPage(
              
              # Second Part - Player Description
              h6(" "),
-             fluidRow(column(width=4, align="center", img(id="player_image", src=image_url, width=100)),
+             fluidRow(id='player_info',
+                      column(width=4, align="center", img(id="player_image", src=image_url, width=100)),
                       column(id = "player_intro", width = 8, align = "left",
-                             fluidRow(h2(id='player_full_name', as.character(player))), 
-                             fluidRow(h6('Position:')),
-                             fluidRow(h6(id='player_pos', player_positions)),
-                             fluidRow(h6(id='player_age', 'Age:', player_age)),
-                             fluidRow(h6(id='player_exp', 'Experience:', player_exp, 'years.'))
+                             # fluidRow(div(p(id='player_full_name', as.character(player))),
+                             #          style='font-size: 24px; font-weight: bold;'),
+                             # fluidRow(h2(id='player_full_name', as.character(player))),
+                             fluidRow(column(width = 12,
+                                             h2(
+                                               style = "height:30px;margin-top:-10px;",
+                                               textOutput(outputId = "player_full_name")
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px; padding-bottom:10px;text-decoration: underline;",
+                                               'Position:'
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px; margin-top:-5px; padding-bottom:10px;",
+                                               textOutput(outputId = "player_pos")
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px; text-decoration: underline;",
+                                               'Age:'
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px;margin-top:-5px;",
+                                               textOutput(outputId = "player_age")
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px; padding-bottom:10px;text-decoration: underline;",
+                                               'Experience:'
+                                             ))),
+                             fluidRow(column(width = 12,
+                                             h6(
+                                               style = "height:15px;margin-top:-5px;",
+                                               textOutput(outputId = "player_exp")
+                                             )))
                       )),
              
              # Third Part - Filter by Year (by Nate)
@@ -258,9 +294,6 @@ ui <- fluidPage(
     ),
     mainPanel(
       column(width = 12, 
-             # fluidRow(plotlyOutput(outputId = "plot_by_year_pts")),
-             # fluidRow(plotlyOutput(outputId = "plot_by_year_g")),
-             # fluidRow(plotOutput(outputId = "plot_by_year_radar"))
              column(width=10, align="center",
                     plotlyOutput(
                       outputId = "plot_pts",
@@ -291,6 +324,22 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
+  
+  output$player_full_name <- renderText({
+    player
+  })
+  
+  output$player_pos <- renderText({
+    player_positions
+  })
+  
+  output$player_age <- renderText({
+    paste0(player_age)
+  })
+  
+  output$player_exp <- renderText({
+    paste0(player_exp, ' years.')
+  })
   
   update_plots <- function(input, output, session){
     output$plot_pts <- renderPlotly({
@@ -464,23 +513,25 @@ server <- function(input, output, session) {
       
       url_status_200 <- TRUE
       
-      # Update the image
-      output$player_image <- renderImage({
-        src = image_url
+      output$num_houses <- renderText(
+        "length(na.omit(filtered_data()$current_land_value))"
+      )
+      
+      output$player_full_name <- renderText({
+        player
       })
       
-      print(player)
-      # updateTextOutput(session, "player_full_name", as.character(player))
+      output$player_pos <- renderText({
+        player_positions
+      })
       
-      output$player_full_name <- renderText({as.character(player)})
+      output$player_age <- renderText({
+        paste0(player_age)
+      })
       
-      # 
-      # renderUI(session, 
-      #              "player_intro", 
-      #              fluidRow(player),
-      #              fluidRow('Position:', player_positions),
-      #              fluidRow('Age:', player_age),
-      #              fluidRow('Experience:', player_exp))
+      output$player_exp <- renderText({
+        paste0(player_exp, ' years.')
+      })
       
       updateSliderInput(session, 
                         "careeryearslider", 
@@ -635,14 +686,6 @@ server <- function(input, output, session) {
       })
     }
   })
-  
-  # print(url_status_200)
-  # if (url_status_200 == TRUE){
-  #   print('status ok')
-  #   observe({
-  #     js$updateImage(session, "player_image", src = image_url)
-  #   })
-  # }
   
   update_plots(input, output, session)
   
