@@ -417,10 +417,10 @@ server <- function(input, output, session) {
     data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
     
     # Filer by Team (by Sun)
-    # selected_team <- substr(input$team_select, 
-    #                         start = nchar(input$team_select) - 3,
-    #                         stop = nchar(input$team_select) - 1)
-    # data_by_year_team <- data_by_year |> filter(Tm == selected_team)
+    selected_team <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3,
+                            stop = nchar(input$team_select) - 1)
+    data_by_year_team <- data_by_year |> filter(Tm == selected_team)
     
     # Filter Whole Career (by Peng)
     if (input$wholecareer_tick) {
@@ -448,10 +448,10 @@ server <- function(input, output, session) {
     data_by_year <- player_exp_no_na |> filter(Season >= min_year_input, Season <= max_year_input)
     
     # Filer by Team (by Sun)
-    # selected_team <- substr(input$team_select, 
-    #                         start = nchar(input$team_select) - 3,
-    #                         stop = nchar(input$team_select) - 1)
-    # data_by_year_team <- data_by_year |> filter(Tm == selected_team)
+    selected_team <- substr(input$team_select, 
+                            start = nchar(input$team_select) - 3,
+                            stop = nchar(input$team_select) - 1)
+    data_by_year_team <- data_by_year |> filter(Tm == selected_team)
     
     # Filter Whole Career (by Peng)
     if (input$wholecareer_tick) {
