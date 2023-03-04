@@ -193,7 +193,8 @@ player <- str_to_title('Vince Carter')
 player_info <- update_player(player)
 
 
-image_url <- player_info$image_url
+# image_url <- player_info$image_url
+image_url <- reactiveVal(player_info$image_url)
 player_positions <- player_info$player_positions
 player_age <- player_info$player_age
 player_exp <- player_info$player_exp
@@ -221,7 +222,8 @@ ui <- fluidPage(
              h6(" "),
              fluidRow(id='player_info',
                       column(width=4, align="center",
-                             img(id="player_image", src=image_url, width=100)),
+                             # img(id="player_image", src=image_url, width=100),
+                             uiOutput("player_image_ui")),
                       column(id = "player_intro", width = 8, align = "left",
                              # fluidRow(div(p(id='player_full_name', as.character(player))),
                              #          style='font-size: 24px; font-weight: bold;'),
@@ -329,6 +331,13 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
+  output$player_image_ui <- renderUI({
+    tags$img(
+      id = "player_image",
+      src = image_url(),
+      width = 100
+    )
+  })
   
   output$player_full_name <- renderText({
     'Vince Carter'
@@ -518,7 +527,16 @@ server <- function(input, output, session) {
       
       url_status_200 <- TRUE
       
-      session$sendCustomMessage(type = "updateImageSrc", message = list(selector = "#player_image", src = image_url))
+      image_url(image_url)
+      
+      # output$player_image_ui <- renderUI({
+      #   tags$img(
+      #     id = "player_image",
+      #     src = image_url(),
+      #     width = 100
+      #   )
+      # })
+      
       
       output$player_full_name <- renderText({
         player
