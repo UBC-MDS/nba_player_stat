@@ -350,7 +350,7 @@ server <- function(input, output, session) {
       updateSelectInput(session, 
                         "team_select", 
                         choices = player_teams)
-      
+    
       updateCheckboxInput(session, "wholecareer_tick", value = FALSE)
     }
   })
