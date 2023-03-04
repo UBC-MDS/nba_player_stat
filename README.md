@@ -1,6 +1,37 @@
 # NBA Player Performances
 
-Team members: Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut
+***A comprehensive NBA player data visualization dashboard application.***
+
+## Welcome!
+
+Welcome! to the repository of the NBA Performance App  :confetti_ball:  ！
+
+Thank you for visiting our project,hope all of you can enjoy browsing the NBA player performance.
+
+This document just provide the basic information of this NBA Player Performance APP project.Please feel free to navigate each section by the list below: 
+
+* [What are we doing?](#what-are-we-doing)
+* [Description of App](#description-of-app)
+* [Sketch](#sketch)
+* [Contributors](#contributors)
+* [How can you get involved?](#get-involved)
+
+## What are we doing?
+
+### The problem
+
+How can we understand a NBA player's historical performance and skills during their career?
+
+
+### The solution
+
+The NBA performance app will:
+
+* Improve visibility for the player's historical performance data.
+* Help NBA fans better understand their favorite players and visualize how the players have performed historically over time and across players and teams.
+* Let fans to determine a player's style such as what kind of player he is, how many games he plays, how much he scores per game, the number of assists, etc., and use this as a starting point to get to know a new player better. 
+
+The most important thing is that we can honor and learn those former NBA superstars, such as Micheal Jordan and Kobe Bryant, by visualizing their performances. For instance, Kobe Bryant, we can learn about the wonders the legendary superstar created with the Lakers and the glory of the purple and gold dynasty with scored 33,643 points, 7,047 rebounds, and 6,306 assists during the entire career. Salute to the eternal Lakers #24.
 
 ## Description of App
 
@@ -24,6 +55,12 @@ Therefore, users can study each NBA player's performance in detail and understan
 
 ## Contributors
 The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut.
+
+## Get involved
+
+If you have any new ideas and suggestions for improvement about this app, please feel free to contact us. The main contact email is: althrunsun@gmail.com
+
+Please note that it's very important to us that we maintain a positive and supportive environment for everyone who wants to participate. You can check the code of conduct for more details if you want to be with us.
 
 # License
 `nba_player_stat` is licensed under the terms of the MIT license.
