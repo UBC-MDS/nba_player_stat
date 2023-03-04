@@ -2,6 +2,22 @@
 
 ***A comprehensive NBA player data visualization dashboard application.***
 
+## Welcome!
+
+Welcome! to the repository of the NBA Performance App :confetti_ball ！
+
+Thank you for visiting the STEMM Role Models app project repository.
+
+This document (the README file) is a hub to give you some information about the project. Jump straight to one of the sections below, or just scroll down to find out more.
+
+* [What are we doing? (And why?)](#what-are-we-doing)
+* [Who are we?](#who-are-we)
+* [What do we need?](#what-do-we-need)
+* [How can you get involved?](#get-involved)
+* [Get in touch](#contact-us)
+* [Find out more](#find-out-more)
+* [Understand the jargon](#glossary)
+
 ## Description of App
 
 The visualization app contains a landing page that shows NBA player performances. The visualization comprises the data of over 500 NBA players among 30 NBA teams. This app aims to help enthusiast NBA fans to understand better and assess NBA player performances.
