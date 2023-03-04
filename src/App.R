@@ -406,7 +406,7 @@ server <- function(input, output, session) {
       
       ggplotly( 
         ggplot(displayed_data, 
-               aes(Season, G)) + 
+               aes(Season, G, fill='G')) +
           ggtitle(text_title) +
           geom_bar(stat = 'summary', fun = sum) +
           theme(axis.text.x = element_text(angle = 45, hjust = 1)))
@@ -577,7 +577,7 @@ server <- function(input, output, session) {
         # Plot
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, `PTS per game`, fill = `PTS per game`)) + 
+                 aes(Season, `PTS per game`, fill = `Tm`)) + 
             guides(fill = "none") +
             ggtitle(text_title) +
             ylab('Points per games') +
@@ -610,7 +610,7 @@ server <- function(input, output, session) {
         
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, G)) + 
+                 aes(Season, G, fill='G')) + 
             ggtitle(text_title) +
             geom_bar(stat = 'summary', fun = sum) +
             theme(axis.text.x = element_text(angle = 45, hjust = 1)))
