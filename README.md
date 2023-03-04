@@ -8,7 +8,7 @@ Welcome! to the repository of the NBA Performance App  :confetti_ball:  ！
 
 Thank you for visiting our project,hope all of you can enjoy browsing the NBA player performance.
 
-This document (the README file) is a hub to give you some information about the project. Jump straight to one of the sections below, or just scroll down to find out more.
+This document just provide the basic information of this NBA Player Performance APP project.Please feel free to navigate each section by the list below: 
 
 * [What are we doing?](#what-are-we-doing)
 * [Description of App](#description-of-app)
@@ -20,21 +20,18 @@ This document (the README file) is a hub to give you some information about the 
 
 ### The problem
 
-* Women and other minorities are less likely to be invited to speak at academic and tech conferences
-* Women are less likely to promote themselves: they are more likely to suffer from the [imposter syndrome][link_impostersyndrome]
-* It's difficult for conference organisers to know how good an invited speaker will be if they haven't seen them present before
+How can we understand a NBA player's historical performance and skills during their career?
 
-So, if even the very best intentioned conference organisers (who know the powerful and supportive effects that seeing a diverse panel of presenters have for under-represented groups) have mostly seen presentations by (straight, white, cis-gendered) men then they're likely to invite men again. And so the cycle continues.
 
 ### The solution
 
-The STEMM Role Models app will:
+The NBA performance app will:
 
-* Improve visibility for researchers and developers by making a database that is easy to search with customizable keywords
-* Allow anyone to add researchers so the database can grow without relying on women promoting themselves
-* Provide information that is useful for making decisions on key note invitations such as links to blogs, social media, journal articles, youtube clips, a list of previous invited presentations and testimonials.
+* Improve visibility for the player's historical performance data.
+* Help NBA fans better understand their favorite players and visualize how the players have performed historically over time and across players and teams.
+* Let fans to determine a player's style such as what kind of player he is, how many games he plays, how much he scores per game, the number of assists, etc., and use this as a starting point to get to know a new player better. 
 
-Everyone in the database will have the opportunity to identify themselves as one or more of a selection of different under-represented groups in STEMM. The goal is to ensure that ***conference organisers are able to access a diverse and representative group of the most exciting researchers in their field from around the world***.
+The most important thing is that we can honor and learn those former NBA superstars, such as Micheal Jordan and Kobe Bryant, by visualizing their performances. For instance, Kobe Bryant, we can learn about the wonders the legendary superstar created with the Lakers and the glory of the purple and gold dynasty with scored 33,643 points, 7,047 rebounds, and 6,306 assists during the entire career. Salute to the eternal Lakers #24.
 
 ## Description of App
 
@@ -61,9 +58,9 @@ The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate P
 
 ## Get involved
 
-If you think you can help in any of the areas listed above (and we bet you can) or in any of the many areas that we haven't yet thought of (and here we're *sure* you can) then please check out our [contributors' guidelines](CONTRIBUTING.md) and our [roadmap](../../issues/1).
+If you have any new ideas and suggestions for improvement about this app, please feel free to contact us. The main contact email is: althrunsun@gmail.com
 
-Please note that it's very important to us that we maintain a positive and supportive environment for everyone who wants to participate. When you join us we ask that you follow our [code of conduct](CODE_OF_CONDUCT.md) in all interactions both on and offline.
+Please note that it's very important to us that we maintain a positive and supportive environment for everyone who wants to participate. You can check the code of conduct for more details if you want to be with us.
 
 # License
 `nba_player_stat` is licensed under the terms of the MIT license.
