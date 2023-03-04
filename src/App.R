@@ -3,6 +3,7 @@
 # Load necessary libraries for the app
 library(shiny)
 library(ggplot2)
+library(thematic)
 library(plotly)
 library(plyr)
 library(tidyverse)
@@ -139,6 +140,8 @@ update_player <- function(player) {
   player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
   
   player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
+  
+  # player_exp_no_na['team_color'] = 
   
   # Get PLayer Experience
   player_exp <- length(unique(player_exp_no_na$Age))
@@ -370,7 +373,7 @@ server <- function(input, output, session) {
       # Plot
       ggplotly( 
         ggplot(displayed_data, 
-               aes(Season, `PTS per game`, fill = `PTS per game`)) + 
+               aes(Season, `PTS per game`, fill = `Tm`)) + 
           guides(fill = "none") +
           ggtitle(text_title) +
           ylab('Points per games') +
