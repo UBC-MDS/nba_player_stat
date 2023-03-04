@@ -1,6 +1,6 @@
 # NBA Player Performances
 
-Team members: Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut
+***A comprehensive NBA player data visualization dashboard application.***
 
 ## Description of App
 
