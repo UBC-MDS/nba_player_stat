@@ -209,14 +209,16 @@ ui <- fluidPage(
     sidebarPanel(
       column(width = 12,
              # First part - Filter by Name (by Chen)
-             h6("Search by player name :"),
+             h4("Search by player name :"),
+             h6("(This search bar automatically checks player name, so make sure the player name is correct)"),
              textInput("player_search", "", placeholder="Search by CORRECT player 'first_name last_name'"),
              # actionButton("update_button", "Update Stats"),
              
              # Second Part - Player Description
              h6(" "),
              fluidRow(id='player_info',
-                      column(width=4, align="center", img(id="player_image", src=image_url, width=100)),
+                      column(width=4, align="center",
+                             img(id="player_image", src=image_url, width=100)),
                       column(id = "player_intro", width = 8, align = "left",
                              # fluidRow(div(p(id='player_full_name', as.character(player))),
                              #          style='font-size: 24px; font-weight: bold;'),
@@ -326,7 +328,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   output$player_full_name <- renderText({
-    player
+    'Vince Carter'
   })
   
   output$player_pos <- renderText({
@@ -513,9 +515,7 @@ server <- function(input, output, session) {
       
       url_status_200 <- TRUE
       
-      output$num_houses <- renderText(
-        "length(na.omit(filtered_data()$current_land_value))"
-      )
+      session$sendCustomMessage(type = "updateImageSrc", message = list(selector = "#player_image", src = image_url))
       
       output$player_full_name <- renderText({
         player
