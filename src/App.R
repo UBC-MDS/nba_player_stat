@@ -335,7 +335,7 @@ server <- function(input, output, session) {
     tags$img(
       id = "player_image",
       src = image_url(),
-      width = 100
+      width = 120
     )
   })
   
@@ -418,7 +418,9 @@ server <- function(input, output, session) {
                aes(Season, G, fill='G')) +
           ggtitle(text_title) +
           geom_bar(stat = 'summary', fun = sum) +
-          theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+          ylab('Game Played') +
+          theme(axis.text.x = element_text(angle = 45, hjust = 1),
+                legend.position = "none"))
     })
     
     output$plot_radar <- renderPlot({
@@ -600,7 +602,9 @@ server <- function(input, output, session) {
             ggtitle(text_title) +
             ylab('Points per games') +
             geom_bar(stat = 'summary', fun = sum) +
-            theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+            ylab('Game Played') +
+            theme(axis.text.x = element_text(angle = 45, hjust = 1),
+                  legend.position = "none"))
       })
       
       output$plot_game <- renderPlotly({
