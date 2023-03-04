@@ -335,7 +335,7 @@ server <- function(input, output, session) {
     tags$img(
       id = "player_image",
       src = image_url(),
-      width = 100
+      width = 120
     )
   })
   
