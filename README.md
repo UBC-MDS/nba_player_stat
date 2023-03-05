@@ -64,7 +64,9 @@ To install `nba_player_stat` locally, you can:
 
 1. Clone this repository with:
 
-`git clone https://github.com/UBC-MDS/nba_player_stat.git`
+```
+git clone https://github.com/UBC-MDS/nba_player_stat.git
+```
 
 2. Run the following command in your R console to install the required libraries locally:
 
