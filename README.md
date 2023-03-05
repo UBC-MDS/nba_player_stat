@@ -63,6 +63,7 @@ The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate P
 To install `nba_player_stat` locally, you can:
 
 1. Clone this repository with:
+
 `git clone https://github.com/UBC-MDS/nba_player_stat.git`
 
 2. Run the following command in your R console to install the required libraries locally:
@@ -71,7 +72,7 @@ To install `nba_player_stat` locally, you can:
 install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', 'rvest', 'ggrepel', 'readr', 'RCurl', 'jpeg', 'thematic', 'ggradar', 'httr', 'stringr', 'htmltools'))
 ```
 
-3. Finally, run the following command to run the app locally:
+3. Finally, move to the directory and run the following command to run the app locally:
 
 ```{r}
 RScript App.R
