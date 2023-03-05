@@ -74,7 +74,7 @@ install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', '
 3. Finally, run the following command to run the app locally:
 
 ```{r}
-RScript app.R
+RScript App.R
 ```
 
 ## Get involved
