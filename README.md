@@ -58,6 +58,25 @@ Therefore, users can study each NBA player's performance in detail and understan
 ## Contributors
 The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut.
 
+## Installation
+
+To install `nba_player_stat` locally, you can:
+
+1. Clone this repository with:
+`git clone https://github.com/UBC-MDS/nba_player_stat.git`
+
+2. Run the following command in your R console to install the required libraries locally:
+
+```{r}
+install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', 'rvest', 'ggrepel', 'readr', 'RCurl', 'jpeg', 'thematic', 'ggradar', 'httr', 'stringr', 'htmltools'))
+```
+
+3. Finally, run the following command to run the app locally:
+
+```{r}
+RScript app.R
+```
+
 ## Get involved
 
 If you have any new ideas and suggestions for improvement about this app, please feel free to contact us. The main contact email is: althrunsun@gmail.com

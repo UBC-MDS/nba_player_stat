@@ -14,23 +14,13 @@ library(RCurl)
 library(jpeg)
 
 # For Radar chart
-# library(fmsb) 
 library(ggradar)
-
 # For checking URL
 library(httr)
-
 # For capitalize the name
 library(stringr)
-
 library(htmltools)
 
-# library(shinyjs)
-# library(shinyBS)
-
-# Read the dataset from the specified location in the application file directory
-#dataset <-
-#read.csv("../data/preload_data_player_name.csv")
 
 # Using real time api to load nba player stats data
 
@@ -94,15 +84,10 @@ get_player_web <- function(player) {
   
   response <- GET(url)
   
-  # if (status_code(response) == 200) {
-  #   print(paste0("The URL ", url, " is accessible."))
-  # }
-  
   return(list(url = url,
               image_url = image_url,
               response = status_code(response)))
 }
-
 
 update_player <- function(player) {
   
@@ -141,8 +126,6 @@ update_player <- function(player) {
   
   player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
   
-  # player_exp_no_na['team_color'] = 
-  
   # Get PLayer Experience
   player_exp <- length(unique(player_exp_no_na$Age))
   
@@ -155,8 +138,6 @@ update_player <- function(player) {
   
   # Get PLayer Positions
   player_position_ls <- unique(player_exp_no_na$Pos)
-  
-  # print(player_position_ls)
   
   player_positions <- ''
   
@@ -192,8 +173,6 @@ player <- str_to_title('Vince Carter')
 
 player_info <- update_player(player)
 
-
-# image_url <- player_info$image_url
 image_url <- reactiveVal(player_info$image_url)
 player_positions <- player_info$player_positions
 player_age <- player_info$player_age
@@ -225,9 +204,6 @@ ui <- fluidPage(
                              # img(id="player_image", src=image_url, width=100),
                              uiOutput("player_image_ui")),
                       column(id = "player_intro", width = 8, align = "left",
-                             # fluidRow(div(p(id='player_full_name', as.character(player))),
-                             #          style='font-size: 24px; font-weight: bold;'),
-                             # fluidRow(h2(id='player_full_name', as.character(player))),
                              fluidRow(column(width = 12,
                                              h2(
                                                style = "height:30px;margin-top:-10px;",
@@ -451,7 +427,6 @@ server <- function(input, output, session) {
         Rebounds = mean(displayed_data$`TRB per game`),
         Blocks = mean(displayed_data$`BLK per game`)
       ) |> rownames_to_column(var = "Category")
-      # print(player_matrix)
       
       # Find the maximum value in the data frame
       max_val <-max(player_matrix[, -1])
@@ -462,7 +437,6 @@ server <- function(input, output, session) {
       grid_vals_for_ggradar <- c(grid_vals[1],
                                  ceiling(grid_vals[grid_mid_idx]),
                                  grid_vals[length(grid_vals)])
-      # print(grid_vals_for_ggradar)
       
       # Highest season avgs in NBA regular seasons
       nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
@@ -476,7 +450,6 @@ server <- function(input, output, session) {
                         ceiling(nba_reg_high_ast),
                         ceiling(nba_reg_high_stl),
                         ceiling(nba_reg_high_blk))
-      # print(nba_reg_high)
       
       ggradar(
         player_matrix, 
@@ -529,16 +502,7 @@ server <- function(input, output, session) {
       
       url_status_200 <- TRUE
       
-      image_url(image_url)
-      
-      # output$player_image_ui <- renderUI({
-      #   tags$img(
-      #     id = "player_image",
-      #     src = image_url(),
-      #     width = 100
-      #   )
-      # })
-      
+      image_url(image_url)      
       
       output$player_full_name <- renderText({
         player
@@ -677,7 +641,6 @@ server <- function(input, output, session) {
         grid_vals_for_ggradar <- c(grid_vals[1],
                                    ceiling(grid_vals[grid_mid_idx]),
                                    grid_vals[length(grid_vals)])
-        # print(grid_vals_for_ggradar)
         
         # Highest season avgs in NBA regular seasons
         nba_reg_high_pts <- 50.36 # Wilt Chamberlain*	
@@ -691,7 +654,6 @@ server <- function(input, output, session) {
                           ceiling(nba_reg_high_ast),
                           ceiling(nba_reg_high_stl),
                           ceiling(nba_reg_high_blk))
-        # print(nba_reg_high)
         
         ggradar(
           player_matrix, 
