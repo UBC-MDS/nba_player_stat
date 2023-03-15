@@ -76,13 +76,12 @@ install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', '
 
 3. Finally, rn the app locally by: 
 
-- Open `Rstudio`, navigate to `src` folder under the project folder, open `App.R` and run it by clicking `Run App` button one the top-right of RStudio.
+- Open `Rstudio`, navigate to `src` folder under the project folder, open `App.R` and run it by clicking `Run` button one the top-right of RStudio.
 
 - Open a command line, navigate to `src` folder under the project folder, run the following command to run the app locally:
-
-```
-RScript App.R
-```
+    ```
+    RScript App.R
+    ```
 
 ## Get involved
 
