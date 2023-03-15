@@ -201,6 +201,8 @@ player_last_season <- player_info$player_last_season
 player_exp_no_na <- player_info$player_exp_no_na
 player_teams <- player_info$player_teams
 
+# print(as.integer(gsub(",", "", substr(player_first_season, start = 1, stop = 4))))
+
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -268,11 +270,12 @@ ui <- fluidPage(
              sliderInput(
                inputId = "careeryearslider",
                label = "Career Year",
-               min = as.integer(substr(player_first_season, start = 1, stop = 4)),
-               max = as.integer(substr(player_last_season, start = 1, stop = 4)),
-               value = c(as.integer(substr(player_first_season, start = 1, stop = 4)),
-                         as.integer(substr(player_last_season, start = 1, stop = 4))),
-               step = 1),
+               min = as.integer(gsub(",", "", substr(player_first_season, start = 1, stop = 4))),
+               max = as.integer(gsub(",", "", substr(player_last_season, start = 1, stop = 4))),
+               value = range(as.integer(gsub(",", "", substr(player_first_season, start = 1, stop = 4))),
+                             as.integer(gsub(",", "", substr(player_last_season, start = 1, stop = 4)))),
+               step = 1,
+               sep = ""),
              
              # Forth Part - Filter Team (by Sun)
              h1(" "),
