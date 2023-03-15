@@ -30,7 +30,7 @@ jobs:
         env: 
           # Provide your app name, account name, and server to be deployed below
           APPNAME: NBA_Player_Stats
-          ACCOUNT: chchechen
+          ACCOUNT: cchchechen
           SERVER: shinyapps.io # server to deploy
         run: |
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
