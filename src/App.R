@@ -69,6 +69,7 @@ nba_teams_map <- function(team_code) {
                 TOT = "Two Other Teams (TOT)",
                 UTA = "Utah Jazz (UTA)",
                 WAS = "Washington Wizards (WAS)")
+  print(teams[team_code])
   return(teams[[team_code]])
 }
 
@@ -120,6 +121,10 @@ update_player <- function(player) {
            'STL per game' = round(player_stats$STL / player_stats$G, 2),
            'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
            'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
+  
+  player_stats <- player_stats[grepl("-", player_stats$Season), ]
+  
+  player_stats <- player_stats |> mutate(Team = nba_teams_map(Tm))
   
   # remove missing values
   player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
@@ -358,12 +363,14 @@ server <- function(input, output, session) {
       # Plot
       ggplotly( 
         ggplot(displayed_data, 
-               aes(Season, `PTS per game`, fill = `Tm`)) + 
+               aes(Season, `PTS per game`, color = Tm, group = Tm)) + 
           guides(fill = "none") +
           ggtitle(text_title) +
           ylab('Points per games') +
-          geom_bar(stat = 'summary', fun = sum) +
-          theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+          geom_point(stat = 'summary', fun = sum) +
+          geom_line(stat = 'summary', fun = sum, alpha = 0.5) +
+          theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      )
     })
     
     output$plot_game <- renderPlotly({
@@ -393,7 +400,7 @@ server <- function(input, output, session) {
         ggplot(displayed_data, 
                aes(Season, G, fill='G')) +
           ggtitle(text_title) +
-          geom_bar(stat = 'summary', fun = sum) +
+          geom_bar(stat = 'summary', fun = sum, fill = "#c8102e") +
           ylab('Game Played') +
           theme(axis.text.x = element_text(angle = 45, hjust = 1),
                 legend.position = "none"))
@@ -461,7 +468,7 @@ server <- function(input, output, session) {
         # Polygons
         group.line.width = 1, 
         group.point.size = 3,
-        group.colours = "#00AFBB",
+        group.colours = "#1d428a",
         # Background and grid lines
         background.circle.colour = "white",
         gridline.mid.colour = "grey"
@@ -561,14 +568,14 @@ server <- function(input, output, session) {
         # Plot
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, `PTS per game`, fill = `Tm`)) + 
+                 aes(Season, `PTS per game`, color = Tm, group = Tm)) + 
             guides(fill = "none") +
             ggtitle(text_title) +
             ylab('Points per games') +
-            geom_bar(stat = 'summary', fun = sum) +
-            ylab('Game Played') +
-            theme(axis.text.x = element_text(angle = 45, hjust = 1),
-                  legend.position = "none"))
+            geom_point(stat = 'summary', fun = sum) +
+            geom_line(stat = 'summary', fun = sum, alpha = 0.5) +
+            theme(axis.text.x = element_text(angle = 45, hjust = 1))
+        )
       })
       
       output$plot_game <- renderPlotly({
@@ -596,10 +603,12 @@ server <- function(input, output, session) {
         
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, G, fill='G')) + 
+                 aes(Season, G, fill='G')) +
             ggtitle(text_title) +
-            geom_bar(stat = 'summary', fun = sum) +
-            theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+            geom_bar(stat = 'summary', fun = sum, fill = "#c8102e") +
+            ylab('Game Played') +
+            theme(axis.text.x = element_text(angle = 45, hjust = 1),
+                  legend.position = "none"))
       })
       
       output$plot_radar <- renderPlot({
@@ -665,7 +674,7 @@ server <- function(input, output, session) {
           # Polygons
           group.line.width = 1, 
           group.point.size = 3,
-          group.colours = "#00AFBB",
+          group.colours = "#1d428a",
           # Background and grid lines
           background.circle.colour = "white",
           gridline.mid.colour = "grey"
