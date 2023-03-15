@@ -74,9 +74,13 @@ git clone https://github.com/UBC-MDS/nba_player_stat.git
 install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', 'rvest', 'ggrepel', 'readr', 'RCurl', 'jpeg', 'thematic', 'ggradar', 'httr', 'stringr', 'htmltools'))
 ```
 
-3. Finally, move to the directory and run the following command to run the app locally:
+3. Finally, rn the app locally by: 
 
-```{r}
+- Open `Rstudio`, navigate to `src` folder under the project folder, open `App.R` and run it by clicking `Run App` button one the top-right of RStudio.
+
+- Open a command line, navigate to `src` folder under the project folder, run the following command to run the app locally:
+
+```
 RScript App.R
 ```
 
