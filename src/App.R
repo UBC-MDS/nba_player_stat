@@ -69,7 +69,14 @@ nba_teams_map <- function(team_code) {
                 TOT = "Two Other Teams (TOT)",
                 UTA = "Utah Jazz (UTA)",
                 WAS = "Washington Wizards (WAS)")
-  print(teams[team_code])
+  # print(team_code)
+  # if (team_code %in% names(teams)) {
+  #   print(teams[[team_code]])
+  #   return(teams[[team_code]])
+  # } else {
+  #   print('NOT A TEAM')
+  #   return('NOT A TEAM')
+  # }
   return(teams[[team_code]])
 }
 
@@ -122,12 +129,16 @@ update_player <- function(player) {
            'BLK per game' = round(player_stats$BLK / player_stats$G, 2),
            'PTS per game' = round(player_stats$PTS / player_stats$G, 2))
   
-  player_stats <- player_stats[grepl("-", player_stats$Season), ]
-  
-  player_stats <- player_stats |> mutate(Team = nba_teams_map(Tm))
-  
   # remove missing values
   player_exp_no_na <- player_stats |> filter(!is.na(player_stats$Age))
+  
+  # print(player_exp_no_na)
+  
+  player_exp_no_na$Team <- apply(player_exp_no_na, MARGIN = 1, FUN = function(x) {
+    nba_teams_map(x["Tm"])
+  })
+  
+  print(player_exp_no_na)
   
   player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
   
@@ -363,7 +374,7 @@ server <- function(input, output, session) {
       # Plot
       ggplotly( 
         ggplot(displayed_data, 
-               aes(Season, `PTS per game`, color = Tm, group = Tm)) + 
+               aes(Season, `PTS per game`, color = Team, group = Team)) + 
           guides(fill = "none") +
           ggtitle(text_title) +
           ylab('Points per games') +
@@ -568,7 +579,7 @@ server <- function(input, output, session) {
         # Plot
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, `PTS per game`, color = Tm, group = Tm)) + 
+                 aes(Season, `PTS per game`, color = Team, group = Team)) + 
             guides(fill = "none") +
             ggtitle(text_title) +
             ylab('Points per games') +
