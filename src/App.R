@@ -138,7 +138,10 @@ update_player <- function(player) {
     nba_teams_map(x["Tm"])
   })
   
-  print(player_exp_no_na)
+  # print(player_exp_no_na)
+  
+  player_exp_no_na <- player_exp_no_na |> 
+    rename_with(~ "Game played", .cols = "G")
   
   player_exp_no_na <- player_exp_no_na[player_exp_no_na$Tm != 'TOT',]
   
@@ -409,7 +412,7 @@ server <- function(input, output, session) {
       
       ggplotly( 
         ggplot(displayed_data, 
-               aes(Season, G, fill='G')) +
+               aes(Season, `Game played`)) +
           ggtitle(text_title) +
           geom_bar(stat = 'summary', fun = sum, fill = "#c8102e") +
           ylab('Game Played') +
@@ -614,7 +617,7 @@ server <- function(input, output, session) {
         
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, G, fill='G')) +
+                 aes(Season, `Game played`)) +
             ggtitle(text_title) +
             geom_bar(stat = 'summary', fun = sum, fill = "#c8102e") +
             ylab('Game Played') +
