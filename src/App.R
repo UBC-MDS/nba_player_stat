@@ -366,6 +366,16 @@ server <- function(input, output, session) {
     paste0(player_exp, ' years.')
   })
   
+  # automatically uncheck whole career when updating careeryearslider
+  observeEvent(input$careeryearslider, {
+    updateCheckboxInput(session, "wholecareer_tick", value = FALSE)
+  })
+  
+  # automatically uncheck whole career when updating team_select
+  observeEvent(input$team_select, {
+    updateCheckboxInput(session, "wholecareer_tick", value = FALSE)
+  })
+  
   update_plots <- function(input, output, session){
     output$plot_pts <- renderPlotly({
       
@@ -578,7 +588,7 @@ server <- function(input, output, session) {
                         "team_select", 
                         choices = player_teams)
       
-      updateCheckboxInput(session, "wholecareer_tick", value = TRUE)
+      #updateCheckboxInput(session, "wholecareer_tick", value = TRUE)
       
       output$plot_pts <- renderPlotly({
         
