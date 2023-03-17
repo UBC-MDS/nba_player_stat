@@ -20,6 +20,24 @@ library(httr)
 # For capitalize the name
 library(stringr)
 library(htmltools)
+#sun's package
+library(stringdist)
+
+#read the data first
+
+
+#Using  the Jaro-Winkler distance to match the most similar text.
+find_closest_name <- function(target_name, name_list) {
+  target_name_lower <- tolower(target_name)
+  name_list_lower <- tolower(name_list)
+  
+
+  distances <- sapply(name_list_lower, function(x) stringdist(target_name_lower, x, method = "jw"))
+  
+  min_index <- which.min(distances)
+  
+  return(name_list[min_index])
+}
 
 
 # Using real time api to load nba player stats data
