@@ -335,18 +335,24 @@ ui <- fluidPage(
                       )
                     )
                     ,
-                    plotlyOutput(
-                      outputId = "plot_game",
-                      width = "100%",
-                      height = "220px",
-                      inline = FALSE,
-                      reportTheme = TRUE
-                    ),
-                    plotOutput(
-                      outputId = "plot_radar",
-                      width = "100%",
-                      height = "225px",
+                    shinycssloaders::withSpinner(
+                      plotlyOutput(
+                        outputId = "plot_game",
+                        width = "100%",
+                        height = "220px",
+                        inline = FALSE,
+                        reportTheme = TRUE
+                      )
                     )
+                    ,
+                    shinycssloaders::withSpinner(
+                      plotOutput(
+                        outputId = "plot_radar",
+                        width = "100%",
+                        height = "225px",
+                      )
+                    )
+                    
              ),
              
       )
