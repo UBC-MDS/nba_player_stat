@@ -20,7 +20,7 @@
     ],
     "player_search": "",
     "plotly_afterplot-A": "\"plot_pts\"",
-    "plotly_relayout-A": "{\"width\":593.875,\"height\":220}",
+    "plotly_relayout-A": "{\"width\":652.765625,\"height\":220}",
     "stat_select": "Rebounds",
     "team_select": "Detroit Pistons (DET)",
     "wholecareer_tick": false
@@ -432,22 +432,22 @@
               7
             ],
             "y": [
-              6.49,
-              11.62,
-              8.96,
-              8.77,
-              8.16,
-              9.76,
-              7.55
+              4.31,
+              8.72,
+              9.41,
+              9.66,
+              12.51,
+              18.66,
+              18.26
             ],
             "text": [
-              "Season: 1986-87<br />PTS per game:  6.49<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1987-88<br />PTS per game: 11.62<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1988-89<br />PTS per game:  8.96<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1989-90<br />PTS per game:  8.77<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1990-91<br />PTS per game:  8.16<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1991-92<br />PTS per game:  9.76<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
-              "Season: 1992-93<br />PTS per game:  7.55<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)"
+              "Season: 1986-87<br />TRB per game:  4.31<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1987-88<br />TRB per game:  8.72<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1988-89<br />TRB per game:  9.41<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1989-90<br />TRB per game:  9.66<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1990-91<br />TRB per game: 12.51<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1991-92<br />TRB per game: 18.66<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1992-93<br />TRB per game: 18.26<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -492,7 +492,7 @@
             "size": 14.6118721461187
           },
           "title": {
-            "text": "Points/Games between 1986 and 1999 playing for Detroit Pistons (DET)",
+            "text": "Rebounds/Games between 1986 and 1999 playing for Detroit Pistons (DET)",
             "font": {
               "color": "rgba(34,34,34,1)",
               "family": "''",
@@ -581,31 +581,28 @@
             "type": "linear",
             "autorange": false,
             "range": [
-              6.2335,
-              11.8765
+              3.5925,
+              19.3775
             ],
             "tickmode": "array",
             "ticktext": [
-              "7",
+              "4",
               "8",
-              "9",
-              "10",
-              "11"
+              "12",
+              "16"
             ],
             "tickvals": [
-              7,
+              4,
               8,
-              9,
-              10,
-              11
+              12,
+              16
             ],
             "categoryorder": "array",
             "categoryarray": [
-              "7",
+              "4",
               "8",
-              "9",
-              "10",
-              "11"
+              "12",
+              "16"
             ],
             "nticks": null,
             "ticks": "outside",
@@ -628,7 +625,7 @@
             "zeroline": false,
             "anchor": "x",
             "title": {
-              "text": "Points  per games",
+              "text": "Rebounds  per games",
               "font": {
                 "color": "rgba(34,34,34,1)",
                 "family": "''",
@@ -801,8 +798,8 @@
       ]
     },
     "plot_radar": {
-      "src": "[image data hash: 7cc04a493a2b85d5cf16a01f069e38b1]",
-      "width": 593.875,
+      "src": "[image data hash: 66be9998c1a0ff9e9c8d10c08b73681d]",
+      "width": 652.765625,
       "height": 225,
       "alt": "Plot object",
       "coordmap": {
@@ -830,15 +827,15 @@
               "label": "text"
             },
             "range": {
-              "left": 169.41796388543,
-              "right": 427.31802615193,
+              "left": 198.91796388543,
+              "right": 456.81802615193,
               "bottom": 213.79202988792,
               "top": 7.4719800747198
             }
           }
         ],
         "dims": {
-          "width": 593.875,
+          "width": 652.765625,
           "height": 225
         }
       }
