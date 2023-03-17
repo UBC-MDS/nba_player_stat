@@ -23,6 +23,8 @@ library(htmltools)
 #sun's package
 library(stringdist)
 library(tidyverse)
+library(shinyWidgets)
+library(shinycssloaders)
 #read the data first
 data <- read_csv("docs/player_data.csv")
 players_list<-c(data$name)
@@ -549,12 +551,21 @@ server <- function(input, output, session) {
   player_last_season <- player_info$player_last_season
   player_exp_no_na <- player_info$player_exp_no_na
   player_teams <- player_info$player_teams
+  # progress bar
+  
+  # observeEvent(input$player_search, {
+  #   showPageSpinner()
+  #   Sys.sleep(1)
+  #   hidePageSpinner()
+  # })
   
   url_status_200 <- FALSE
-  
   # Define reactive to get input value
   observeEvent(input$player_search, {
-    
+    #spinner
+    showPageSpinner()
+    Sys.sleep(1)
+    hidePageSpinner()
     middleware<-find_closest_name(input$player_search,players)
     player <<- str_to_title(middleware)
     # player <<- str_to_title(input$player_search)
