@@ -286,6 +286,10 @@ ui <- fluidPage(
              h1(" "),
              h1(" "),
              h1(" "),
+             
+              selectInput("stat_select", "Select a Statistic:",
+                           choices = c("Points", "Assists", "Blocks", "Rebounds", "Steals")),
+             
              sliderInput(
                inputId = "careeryearslider",
                label = "Career Year",
@@ -417,6 +421,7 @@ server <- function(input, output, session) {
         text_title <- paste0('Points/Games between ', 
                              min_year_input, ' and ', max_year_input, ' playing for ', input$team_select)
       }
+      
       
       # Plot
       ggplotly( 
@@ -625,23 +630,37 @@ server <- function(input, output, session) {
                                 stop = nchar(input$team_select) - 1)
         data_by_year_team <- data_by_year |> filter(Tm == selected_team)
         
-        # Filter Whole Career (by Peng)
+                # bind the selected option to the top_stat_type variable
+        top_stat_type <- reactive({
+          input$stat_select
+        })
+        curr_stat<-top_stat_type()
         if (input$wholecareer_tick) {
           displayed_data <- player_exp_no_na
-          text_title <- 'Points/Games for the Whole Career '
+          text_title <- paste(curr_stat,'/Games for the Whole Career ')
         } else {
           displayed_data <- data_by_year_team
-          text_title <- paste0('Points/Games between ', 
+          text_title <- paste0(curr_stat,'/Games between ', 
                                min_year_input, ' and ', max_year_input, ' playing for ', input$team_select)
         }
-        
+        # print(displayed_data)
+        get_y_axis_label <- function(input_string) {
+  # use switch statement to select the appropriate label based on the input string
+  label <- switch(input_string,
+                  "Points" = "PTS per game",
+                  "Assists" = "AST per game",
+                  "Blocks" = "BLK per game",
+                  "Rebounds" = "TRB per game",
+                  "Steals" = "STL per game")
+  return(label)
+}
         # Plot
         ggplotly( 
           ggplot(displayed_data, 
-                 aes(Season, `PTS per game`, color = Team, group = Team)) + 
+                 aes(Season, .data[[get_y_axis_label(curr_stat)]], color = Team, group = Team)) + 
             guides(fill = "none") +
             ggtitle(text_title) +
-            ylab('Points per games') +
+            ylab(paste(curr_stat,' per games')) +
             geom_point(stat = 'summary', fun = sum) +
             geom_line(stat = 'summary', fun = sum, alpha = 0.5) +
             theme(axis.text.x = element_text(angle = 45, hjust = 1))
