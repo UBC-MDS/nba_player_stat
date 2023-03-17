@@ -325,13 +325,16 @@ ui <- fluidPage(
     mainPanel(
       column(width = 12, 
              column(width=10, align="center",
-                    plotlyOutput(
-                      outputId = "plot_pts",
-                      width = "100%",
-                      height = "220px",
-                      inline = FALSE,
-                      reportTheme = TRUE
-                    ),
+                    shinycssloaders::withSpinner(
+                      plotlyOutput(
+                        outputId = "plot_pts",
+                        width = "100%",
+                        height = "220px",
+                        inline = FALSE,
+                        reportTheme = TRUE
+                      )
+                    )
+                    ,
                     plotlyOutput(
                       outputId = "plot_game",
                       width = "100%",
@@ -402,7 +405,7 @@ server <- function(input, output, session) {
   
   update_plots <- function(input, output, session){
     output$plot_pts <- renderPlotly({
-      
+      Sys.sleep(1.5)
       # Filter by Year (by Nate)
       min_year_input <- as.integer(input$careeryearslider[1])
       max_year_input <- as.integer(input$careeryearslider[2])
