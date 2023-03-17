@@ -20,6 +20,24 @@ library(httr)
 # For capitalize the name
 library(stringr)
 library(htmltools)
+#sun's package
+library(stringdist)
+library(tidyverse)
+#read the data first
+data <- read_csv("docs/player_data.csv")
+players_list<-c(data$name)
+#Using  the Jaro-Winkler distance to match the most similar text.
+find_closest_name <- function(target_name, name_list) {
+  target_name_lower <- tolower(target_name)
+  name_list_lower <- tolower(name_list)
+  
+
+  distances <- sapply(name_list_lower, function(x) stringdist(target_name_lower, x, method = "jw"))
+  
+  min_index <- which.min(distances)
+  
+  return(name_list[min_index])
+}
 
 
 # Using real time api to load nba player stats data
@@ -531,7 +549,10 @@ server <- function(input, output, session) {
   
   # Define reactive to get input value
   observeEvent(input$player_search, {
-    player <<- str_to_title(input$player_search)
+    
+    middleware<-find_closest_name(input$player_search,players)
+    player <<- str_to_title(middleware)
+    # player <<- str_to_title(input$player_search)
     # print(player)
     url_status <- get_player_web(player)$response
     
@@ -560,7 +581,8 @@ server <- function(input, output, session) {
       })
       
       output$player_full_name <- renderText({
-        player
+        #player
+        find_closest_name(player,players_list)
       })
       
       output$player_pos <- renderText({
