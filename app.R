@@ -563,10 +563,10 @@ server <- function(input, output, session) {
   # Define reactive to get input value
   observeEvent(input$player_search, {
     #spinner
-    showPageSpinner()
-    Sys.sleep(1)
-    hidePageSpinner()
-    middleware<-find_closest_name(input$player_search,players)
+    # showPageSpinner()
+    # Sys.sleep(1)
+    # hidePageSpinner()
+    middleware<-find_closest_name(input$player_search,players_list)
     player <<- str_to_title(middleware)
     # player <<- str_to_title(input$player_search)
     # print(player)
