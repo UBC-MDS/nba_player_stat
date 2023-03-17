@@ -1,0 +1,13 @@
+name: NBA_Player_Stat
+title: NBA_Player_Stat
+username:
+account: suraporn
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8593649
+bundleId: 6969619
+url: https://suraporn.shinyapps.io/NBA_Player_Stat/
+when: 1679028768.67934
+lastSyncTime: 1679028768.67936
+asMultiple: FALSE
+asStatic: FALSE
