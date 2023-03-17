@@ -643,7 +643,6 @@ server <- function(input, output, session) {
           text_title <- paste0(curr_stat,'/Games between ', 
                                min_year_input, ' and ', max_year_input, ' playing for ', input$team_select)
         }
-        # print(displayed_data)
         get_y_axis_label <- function(input_string) {
   # use switch statement to select the appropriate label based on the input string
   label <- switch(input_string,
