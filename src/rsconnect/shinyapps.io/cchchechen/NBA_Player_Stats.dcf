@@ -1,0 +1,13 @@
+name: NBA_Player_Stats
+title: NBA_Player_Stats
+username:
+account: cchchechen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8475187
+bundleId: 6959780
+url: https://cchchechen.shinyapps.io/NBA_Player_Stats/
+when: 1678862423.92021
+lastSyncTime: 1678862423.92023
+asMultiple: FALSE
+asStatic: FALSE
