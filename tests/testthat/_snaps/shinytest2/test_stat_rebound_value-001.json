@@ -1,0 +1,847 @@
+{
+  "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
+    "careeryearslider": [
+      1986,
+      1999
+    ],
+    "player_search": "",
+    "plotly_afterplot-A": "\"plot_pts\"",
+    "plotly_relayout-A": "{\"width\":652.765625,\"height\":220}",
+    "stat_select": "Rebounds",
+    "team_select": "Detroit Pistons (DET)",
+    "wholecareer_tick": false
+  },
+  "output": {
+    "player_age": "38",
+    "player_exp": "14 years.",
+    "player_full_name": "Dennis Rodman",
+    "player_image_ui": {
+      "html": "<img id=\"player_image_\" src=\"https://www.basketball-reference.com/req/202106291/images/players/rodmade01.jpg\" width=\"120\"/>",
+      "deps": [
+
+      ]
+    },
+    "player_pos": "Small Forward & Power Forward",
+    "plot_game": {
+      "x": {
+        "data": [
+          {
+            "orientation": "v",
+            "width": [
+              0.9,
+              0.9,
+              0.9,
+              0.9,
+              0.9,
+              0.9,
+              0.9
+            ],
+            "base": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "y": [
+              77,
+              82,
+              82,
+              82,
+              82,
+              82,
+              62
+            ],
+            "text": [
+              "Season: 1986-87<br />Game played: 77",
+              "Season: 1987-88<br />Game played: 82",
+              "Season: 1988-89<br />Game played: 82",
+              "Season: 1989-90<br />Game played: 82",
+              "Season: 1990-91<br />Game played: 82",
+              "Season: 1991-92<br />Game played: 82",
+              "Season: 1992-93<br />Game played: 62"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(200,16,46,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 43.2754946727549,
+            "r": 7.30593607305936,
+            "b": 50.3587563690382,
+            "l": 37.2602739726027
+          },
+          "plot_bgcolor": "rgba(238,238,238,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(34,34,34,1)",
+            "family": "''",
+            "size": 14.6118721461187
+          },
+          "title": {
+            "text": "Games played between 1986 and 1999 playing for Detroit Pistons (DET)",
+            "font": {
+              "color": "rgba(34,34,34,1)",
+              "family": "''",
+              "size": 17.5342465753425
+            },
+            "x": 0,
+            "xref": "paper"
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.4,
+              7.6
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "1986-87",
+              "1987-88",
+              "1988-89",
+              "1989-90",
+              "1990-91",
+              "1991-92",
+              "1992-93"
+            ],
+            "tickvals": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "1986-87",
+              "1987-88",
+              "1988-89",
+              "1989-90",
+              "1990-91",
+              "1991-92",
+              "1992-93"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(74,74,74,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(98,98,98,1)",
+              "family": "''",
+              "size": 11.689497716895
+            },
+            "tickangle": -45,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": true,
+            "gridcolor": "rgba(255,255,255,1)",
+            "gridwidth": 0.66417600664176,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "Season",
+              "font": {
+                "color": "rgba(34,34,34,1)",
+                "family": "''",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -4.1,
+              86.1
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0",
+              "20",
+              "40",
+              "60",
+              "80"
+            ],
+            "tickvals": [
+              0,
+              20,
+              40,
+              60,
+              80
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0",
+              "20",
+              "40",
+              "60",
+              "80"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(74,74,74,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(98,98,98,1)",
+              "family": "''",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": true,
+            "gridcolor": "rgba(255,255,255,1)",
+            "gridwidth": 0.66417600664176,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "Game Played",
+              "font": {
+                "color": "rgba(34,34,34,1)",
+                "family": "''",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(34,34,34,1)",
+              "family": "''",
+              "size": 11.689497716895
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "plot_pts": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "y": [
+              4.31,
+              8.72,
+              9.41,
+              9.66,
+              12.51,
+              18.66,
+              18.26
+            ],
+            "text": [
+              "Season: 1986-87<br />TRB per game:  4.31<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1987-88<br />TRB per game:  8.72<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1988-89<br />TRB per game:  9.41<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1989-90<br />TRB per game:  9.66<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1990-91<br />TRB per game: 12.51<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1991-92<br />TRB per game: 18.66<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)",
+              "Season: 1992-93<br />TRB per game: 18.26<br />Team: Detroit Pistons (DET)<br />Team: Detroit Pistons (DET)"
+            ],
+            "type": "scatter",
+            "mode": "markers+lines",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(230,159,0,1)",
+              "opacity": 1,
+              "size": 5.66929133858268,
+              "symbol": "circle",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "rgba(230,159,0,1)"
+              }
+            },
+            "hoveron": "points",
+            "name": "Detroit Pistons (DET)",
+            "legendgroup": "Detroit Pistons (DET)",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "line": {
+              "width": 1.88976377952756,
+              "color": "rgba(230,159,0,0.5)",
+              "dash": "solid"
+            },
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 43.2754946727549,
+            "r": 7.30593607305936,
+            "b": 50.3587563690382,
+            "l": 37.2602739726027
+          },
+          "plot_bgcolor": "rgba(238,238,238,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(34,34,34,1)",
+            "family": "''",
+            "size": 14.6118721461187
+          },
+          "title": {
+            "text": "Rebounds/Games between 1986 and 1999 playing for Detroit Pistons (DET)",
+            "font": {
+              "color": "rgba(34,34,34,1)",
+              "family": "''",
+              "size": 17.5342465753425
+            },
+            "x": 0,
+            "xref": "paper"
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.4,
+              7.6
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "1986-87",
+              "1987-88",
+              "1988-89",
+              "1989-90",
+              "1990-91",
+              "1991-92",
+              "1992-93"
+            ],
+            "tickvals": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "1986-87",
+              "1987-88",
+              "1988-89",
+              "1989-90",
+              "1990-91",
+              "1991-92",
+              "1992-93"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(74,74,74,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(98,98,98,1)",
+              "family": "''",
+              "size": 11.689497716895
+            },
+            "tickangle": -45,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": true,
+            "gridcolor": "rgba(255,255,255,1)",
+            "gridwidth": 0.66417600664176,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "Season",
+              "font": {
+                "color": "rgba(34,34,34,1)",
+                "family": "''",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              3.5925,
+              19.3775
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "tickvals": [
+              4,
+              8,
+              12,
+              16
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(74,74,74,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(98,98,98,1)",
+              "family": "''",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": true,
+            "gridcolor": "rgba(255,255,255,1)",
+            "gridwidth": 0.66417600664176,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "Rebounds  per games",
+              "font": {
+                "color": "rgba(34,34,34,1)",
+                "family": "''",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": true,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(34,34,34,1)",
+              "family": "''",
+              "size": 11.689497716895
+            },
+            "title": {
+              "text": "Team",
+              "font": {
+                "color": "rgba(34,34,34,1)",
+                "family": "''",
+                "size": 14.6118721461187
+              }
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "plot_radar": {
+      "src": "[image data hash: 66be9998c1a0ff9e9c8d10c08b73681d]",
+      "width": 652.765625,
+      "height": 225,
+      "alt": "Plot object",
+      "coordmap": {
+        "panels": [
+          {
+            "panel": 1,
+            "row": 1,
+            "col": 1,
+            "panel_vars": {
+
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "domain": {
+              "left": -23.8333333333333,
+              "right": 23.8333333333333,
+              "bottom": -19.0666666666667,
+              "top": 19.0666666666667
+            },
+            "mapping": {
+              "x": "x",
+              "y": "y",
+              "label": "text"
+            },
+            "range": {
+              "left": 198.91796388543,
+              "right": 456.81802615193,
+              "bottom": 213.79202988792,
+              "top": 7.4719800747198
+            }
+          }
+        ],
+        "dims": {
+          "width": 652.765625,
+          "height": 225
+        }
+      }
+    }
+  },
+  "export": {
+
+  }
+}
