@@ -1,4 +1,4 @@
-# NBA Stats App
+# NBA Player Stats App
 
 # Load necessary libraries for the app
 library(shiny)
