@@ -224,7 +224,7 @@ ui <- fluidPage(
                       column(width=4, align="center",
                              # img(id="player_image", src=image_url, width=100),
                              uiOutput("player_image_ui")),
-                             # imageOutput("player_image_ui", width="150px")),
+                      # imageOutput("player_image_ui", width="150px")),
                       column(id = "player_intro", width = 8, align = "left",
                              fluidRow(column(width = 12,
                                              h2(
