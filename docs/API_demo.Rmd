@@ -460,3 +460,32 @@ for (team in player_team_ls) {
 }
 
 ```
+
+```{r}
+library(tidyverse)
+data <- read_csv("player_data.csv")
+players<-c(data$name)
+# 加载 stringdist 包
+library(stringdist)
+
+# 定义寻找最接近名字的函数
+find_closest_name <- function(target_name, name_list) {
+  # 将名字转换为小写
+  target_name_lower <- tolower(target_name)
+  name_list_lower <- tolower(name_list)
+
+  # 计算目标名字与列表中每个名字的 Jaro-Winkler 距离
+  distances <- sapply(name_list_lower, function(x) stringdist(target_name_lower, x, method = "jw"))
+
+  # 找到距离最小的索引
+  min_index <- which.min(distances)
+
+  # 返回列表中最接近的名字
+  return(name_list[min_index])
+}
+
+
+
+
+find_closest_name('lebran jam',players)
+```
