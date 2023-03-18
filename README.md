@@ -3,7 +3,7 @@
 
 # NBA Player Performances 
 
-[Hosted on shinyapps.io](https://cchchechen.shinyapps.io/NBA_Player_Stats/ )
+[Hosted on shinyapps.io](https://cchchechen.shinyapps.io/NBA_Player_Stats/)
 
 ***A comprehensive NBA player data visualization dashboard application.***
 
