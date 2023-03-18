@@ -20,7 +20,7 @@
     ],
     "player_search": "",
     "plotly_afterplot-A": "\"plot_pts\"",
-    "plotly_relayout-A": "{\"width\":652.765625,\"height\":220}",
+    "plotly_relayout-A": "{\"width\":644.4375,\"height\":220}",
     "stat_select": "Rebounds",
     "team_select": "Detroit Pistons (DET)",
     "wholecareer_tick": false
@@ -798,8 +798,8 @@
       ]
     },
     "plot_radar": {
-      "src": "[image data hash: 66be9998c1a0ff9e9c8d10c08b73681d]",
-      "width": 652.765625,
+      "src": "[image data hash: 94d77e28a34cebd5c365e982918f22c3]",
+      "width": 644.4375,
       "height": 225,
       "alt": "Plot object",
       "coordmap": {
@@ -827,15 +827,15 @@
               "label": "text"
             },
             "range": {
-              "left": 198.91796388543,
-              "right": 456.81802615193,
+              "left": 194.91796388543,
+              "right": 452.81802615193,
               "bottom": 213.79202988792,
               "top": 7.4719800747198
             }
           }
         ],
         "dims": {
-          "width": 652.765625,
+          "width": 644.4375,
           "height": 225
         }
       }
