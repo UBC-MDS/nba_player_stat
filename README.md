@@ -86,7 +86,7 @@ install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', '
     RScript App.R
     ```
 
-## Get involved
+## Get involved 
 
 If you have any new ideas and suggestions for improvement about this app, please feel free to contact us. The main contact email is: althrunsun@gmail.com
 
