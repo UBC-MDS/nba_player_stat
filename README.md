@@ -13,7 +13,7 @@ Welcome to the repository of the NBA Performance App  :confetti_ball:  ！
 
 Thank you for visiting our project,hope all of you can enjoy browsing the NBA player performance.
 
-This document just provide the basic information of this NBA Player Performance APP project.Please feel free to navigate each section by the list below: 
+This document provides basic information of this NBA Player Performance.Please feel free to navigate each section by the list below: 
 
 * [What are we doing?](#what-are-we-doing)
 * [Description of App](#description-of-app)
@@ -46,9 +46,11 @@ The visualization is designed to display multiple statistics of NBA players. The
 
 - A slider of the year the player plays in NBA. 
 
-- Tick boxes of the quarter of the player plays.
+- A check box of statistics to show.
 
-- A multiple check box of the team the player plays for. 
+- A check box of the team the player plays for. 
+
+- A Tick box of the whole career statistics of the player.
 
 We aim to offer three charts of player performances; Scoring performance(Point per game, Shooting accuracy), Game play(Number of games), and Skill indicators(Point per game, Total Rebound per game, Assist per game, Steal per game, and Block per game). These will show the player's performances according to the player search and its filter.
 
@@ -56,7 +58,7 @@ Therefore, users can study each NBA player's performance in detail and understan
 
 
 ## Sketch
-<img src="img/dashboard_design_version3.png">
+<img src="img/dashboard_design_version4.png">
 
 ## Contributors
 The contributors of this project are Peng Zhang, Fujie Sun, Chen Lin, and Nate Puangpanbut.
@@ -74,16 +76,20 @@ git clone https://github.com/UBC-MDS/nba_player_stat.git
 2. Run the following command in your R console to install the required libraries locally:
 
 ```{r}
-install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', 'rvest', 'ggrepel', 'readr', 'RCurl', 'jpeg', 'thematic', 'ggradar', 'httr', 'stringr', 'htmltools'))
+install.packages(c('tidyverse', 'dplyr', 'plyr', 'shiny', 'ggplot2', 'plotly', 'rvest', 'ggrepel', 'readr', 'RCurl', 'jpeg', 'thematic', 'httr', 'stringr', 'htmltools', 'devtools'))
+```
+```{r}
+devtools::install_github("ricardo-bion/ggradar", 
+                          dependencies = TRUE)
 ```
 
 3. Finally, run the app locally by: 
 
-- Open `Rstudio`, navigate to `src` folder under the project folder, open `App.R` and run it by clicking `Run` button on the top-right of RStudio.
+- Open `Rstudio`, navigate to the project folder, open `app.R` and run it by clicking `Run` button on the top-right of RStudio.
 
-- Open a command line, navigate to `src` folder under the project folder, run the following command to run the app locally:
+- Open a command line, navigate to the project folder, run the following command to run the app locally:
     ```
-    RScript App.R
+    RScript app.R
     ```
 
 ## Get involved 
