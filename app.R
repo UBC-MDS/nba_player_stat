@@ -227,7 +227,7 @@ player_teams <- player_info$player_teams
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch="journal"),
-  titlePanel(title=div(img(src="nba_logo.png", height='100px'), "NBA Player Stats Application Dashboard", align="center")),
+  titlePanel(title=div(img(src="src/www/nba_logo.png", height='100px'), "NBA Player Stats Application Dashboard", align="center")),
   h6(" "),
   sidebarLayout(
     sidebarPanel(
