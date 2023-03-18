@@ -9,7 +9,7 @@
 
 ## Welcome!
 
-Welcome! to the repository of the NBA Performance App  :confetti_ball:  ！
+Welcome to the repository of the NBA Performance App  :confetti_ball:  ！
 
 Thank you for visiting our project,hope all of you can enjoy browsing the NBA player performance.
 
